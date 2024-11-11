@@ -5,3 +5,5 @@
 docs
 .DS_Store
 converted_shiny_app*/*
+*_cache/*
+converted_shiny_apps.qmd

@@ -7,4 +7,5 @@
 ^pkgdown$
 ^\.github$
 ^converted_shiny_app[s]?/*$
-^converted_shiny_app.qmd$
+^converted_shiny_apps.qmd$
+^README_cache/*$

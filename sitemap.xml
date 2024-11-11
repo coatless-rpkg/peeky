@@ -1,0 +1,25 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/404.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/LICENSE.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/authors.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/index.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/create_quarto_shinylive_apps.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/create_standalone_shinylive_app.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/find_shinylive_app_json.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/find_shinylive_code.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/index.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/padding_width.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/parse_code_block.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/parse_yaml_options.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/peek_quarto_shinylive_app.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/peek_shinylive_app.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/peek_standalone_shinylive_app.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/peeky-package.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/print.quarto_shinylive_apps.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/print.standalone_shinylive_app.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/validate_app_json.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/write_apps_to_dirs.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/write_apps_to_quarto.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/write_standalone_shinylive_app.html</loc></url>
+</urlset>
+

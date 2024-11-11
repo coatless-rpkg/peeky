@@ -1,0 +1,7 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+docs
+.DS_Store
+converted_shiny_app*/*

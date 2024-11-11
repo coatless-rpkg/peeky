@@ -8,24 +8,27 @@
 [![R-CMD-check](https://github.com/coatless-rpkg/peeky/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/coatless-rpkg/peeky/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The `peeky` package is a tool for examining and extracting files from
-standalone [Shinylive
-applications](https://shiny.posit.co/py/docs/shinylive.html) and
-[Quarto](https://quarto.org) documents that contain Shinylive components
-through the
-[`quarto-shinylive`](https://github.com/quarto-ext/shinylive) extension.
-This package works for both R and Python Shinylive applications.
+The `peeky` package helps you extract, examine, and run the source code
+from Shiny applications that have been converted to run in the browser
+using [Shinylive](https://shiny.posit.co/py/docs/shinylive.html). It
+works with both standalone converted applications and
+[Quarto](https://quarto.org) documents containing converted Shiny
+components through the
+[quarto-shinylive](https://github.com/quarto-ext/shinylive) extension.
+This package supports both R and Python Shiny applications that have
+been converted to Shinylive.
 
 ## What is Shinylive?
 
-Shinylive is groundbreaking technology that converts existing Shiny
-applications to run entirely in the web browser using WebAssembly,
-eliminating the need for a hosted server. At its core, a Shinylive app
-is simply a converted Shiny application - the same application you’d
-normally run on a server, but transformed to execute directly in the
-browser through [webR](https://docs.r-wasm.org/webr/latest/) for R
-applications or [Pyodide](https://pyodide.org/en/stable/) for Python
-applications.
+[Shinylive](https://shiny.posit.co/py/docs/shinylive.html) is
+groundbreaking technology that converts existing Shiny applications to
+run entirely in the web browser using
+[WebAssembly](https://webassembly.org/), eliminating the need for a
+hosted server. At its core, a Shinylive app is simply a converted Shiny
+application - the same application you’d normally run on a server, but
+transformed to execute directly in the user’s browser through
+[webR](https://docs.r-wasm.org/webr/latest/) for R applications or
+[Pyodide](https://pyodide.org/en/stable/) for Python applications.
 
 The Shinylive ecosystem consists of four main components:
 

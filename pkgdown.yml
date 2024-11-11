@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-11-11T11:36Z
+last_built: 2024-11-11T12:34Z
 urls:
   reference: https://r-pkg.thecoatlessprofessor.com/peeky/reference
   article: https://r-pkg.thecoatlessprofessor.com/peeky/articles

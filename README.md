@@ -16,6 +16,28 @@ through the
 [`quarto-shinylive`](https://github.com/quarto-ext/shinylive) extension.
 This package works for both R and Python Shinylive applications.
 
+## What is Shinylive?
+
+Shinylive is groundbreaking technology that converts existing Shiny
+applications to run entirely in the web browser using WebAssembly,
+eliminating the need for a hosted server. At its core, a Shinylive app
+is simply a converted Shiny application - the same application you’d
+normally run on a server, but transformed to execute directly in the
+browser through [webR](https://docs.r-wasm.org/webr/latest/) for R
+applications or [Pyodide](https://pyodide.org/en/stable/) for Python
+applications.
+
+The Shinylive ecosystem consists of four main components:
+
+- Shinylive Web Assets:
+  [posit-dev/shinylive](https://github.com/posit-dev/shinylive)
+- R Shiny App Converter Package:
+  [posit-dev/r-shinylive](https://github.com/posit-dev/r-shinylive)
+- Python Shiny App Convert Package:
+  [posit-dev/py-shinylive](https://github.com/posit-dev/py-shinylive)
+- Shinylive Quarto Extension:
+  [quarto-ext/shinylive](https://github.com/quarto-ext/shinylive)
+
 ## There Are No Secrets in Shinylive
 
 The `peeky` package was developed to demonstrate a fundamental truth

@@ -26,38 +26,61 @@ create_quarto_shinylive_apps <- function(apps, output_format, output_path) {
 #'
 #' @export
 print.quarto_shinylive_apps <- function(x, ...) {
+
     # Style definitions
     path_style <- list(color = "cyan")
     cmd_style <- list(color = "yellow")
+
 
     if (x$output_format == "app-dir") {
         # Group apps by engine
         r_apps <- which(sapply(x$apps, function(x) x$engine == "r"))
         py_apps <- which(sapply(x$apps, function(x) x$engine == "python"))
 
+        # Get full normalized path for base directory
+        full_base_path <- normalizePath(x$output_path, winslash = "/", mustWork = TRUE)
+
         cli::cli_h1("Shinylive Applications")
 
         # Print R apps
         if (length(r_apps) > 0) {
-            cli::cli_h2("R Applications")
+            cli::cli_h2("Shiny for {.emph R} Applications")
             cli::cli_text("Run in {.emph R}:")
             for (app_num in r_apps) {
-                dir_path <- sprintf("%s/app_%d", x$output_path, app_num)
-                cli::cli_code(sprintf('shiny::runApp("%s")', dir_path))
+                dir_path <- file.path(full_base_path, sprintf("app_%d", app_num))
+                cli::cli_code(
+                    sprintf('shiny::runApp("%s")', dir_path),
+                    language = "r"
+                )
             }
         }
 
         # Print Python apps
         if (length(py_apps) > 0) {
             if (length(r_apps) > 0) cli::cli_text() # Add spacing
-            cli::cli_h2("Python Applications")
+            cli::cli_h2("Shiny for {.emph Python} Applications")
             cli::cli_text("Run in {.emph Terminal}:")
             for (app_num in py_apps) {
-                dir_path <- sprintf("%s/app_%d", x$output_path, app_num)
-                cli::cli_code(sprintf('shiny run --reload --launch-browser "%s"', dir_path))
+                app <- x$apps[[app_num]]
+                dir_path <- file.path(full_base_path, sprintf("app_%d", app_num))
+
+                # Find main Python file
+                file_names <- names(app$files)
+                main_py_file <- if ("app.py" %in% file_names) {
+                    "app.py"
+                } else {
+                    # Take first .py file if app.py not found
+                    py_files <- file_names[grepl("\\.py$", file_names)]
+                    if (length(py_files) > 0) py_files[1] else ""
+                }
+
+                app_path <- file.path(dir_path, main_py_file)
+                cli::cli_code(
+                    sprintf('shiny run --reload --launch-browser "%s"', app_path),
+                    language = "bash"
+                )
             }
         }
-
     } else {
         # Quarto format
         cli::cli_h1("Quarto Document with Shinylive Applications")
@@ -76,20 +99,20 @@ print.quarto_shinylive_apps <- function(x, ...) {
         if (needs_cd) {
             cli::cli_text()
             cli::cli_text("{.strong Step {current_step}:} Change to the document directory:")
-            cli::cli_code(sprintf('cd "%s"', doc_dir))
+            cli::cli_code('cd "{doc_dir}"', language = "bash")
             current_step <- current_step + 1
         }
 
         # Step: Install extension
         cli::cli_text()
         cli::cli_text("{.strong Step {current_step}:} Install the Shinylive extension:")
-        cli::cli_code("quarto add quarto-ext/shinylive")
+        cli::cli_code("quarto add quarto-ext/shinylive", language = "bash")
         current_step <- current_step + 1
 
         # Step: Preview document
         cli::cli_text()
         cli::cli_text("{.strong Step {current_step}:} Preview the document:")
-        cli::cli_code(sprintf('quarto preview "%s"', doc_name))
+        cli::cli_code('quarto preview "{doc_name}"', language = "bash")
 
         # Add summary of contained apps
         cli::cli_text()
@@ -103,6 +126,5 @@ print.quarto_shinylive_apps <- function(x, ...) {
         ))
     }
 
-    # Add invisible return
     invisible(x)
 }

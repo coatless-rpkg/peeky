@@ -26,24 +26,50 @@ create_standalone_shinylive_app <- function(app_data, output_dir, url) {
 #'
 #' @export
 print.standalone_shinylive_app <- function(x, ...) {
+
+
     # First detect if it's an R or Python app by looking at file extensions
     files_list <- if(is.list(x$files[[1]])) x$files else list(x$files)
     file_names <- sapply(files_list, function(f) f$name)
 
+    # Check if there are R or Python files
     is_r_app <- any(grepl("\\.R$", file_names))
     is_python_app <- any(grepl("\\.py$", file_names))
 
+    # Find main Python file (prefer app.py, but take first .py if not found)
+    main_py_file <- if (is_python_app) {
+        app_py <- file_names[file_names == "app.py"]
+        if (length(app_py) > 0) {
+            app_py[1]
+        } else {
+            py_files <- file_names[grepl("\\.py$", file_names)]
+            if (length(py_files) > 0) py_files[1] else NULL
+        }
+    } else {
+        NULL
+    }
+
+    # Normalized the output path
+    full_path <- normalizePath(x$output_dir, winslash = "/", mustWork = TRUE)
+
     cli::cli_h1("Standalone Shinylive Application")
 
-    # Show app type and run command
+    # Show app type and run command with appropriate syntax highlighting
     if (is_r_app) {
-        cli::cli_text("Type: {.emph R Shiny}")
+        cli::cli_text("Type: {.emph R} Shiny")
         cli::cli_text("Run in {.emph R}:")
-        cli::cli_code(sprintf('shiny::runApp("%s")', x$output_dir))
+        cli::cli_code(
+            sprintf('shiny::runApp("%s")', full_path),
+            language = "r"
+        )
     } else if (is_python_app) {
-        cli::cli_text("Type: {.emph Python Shiny}")
+        dir_path <- file.path(full_path, main_py_file)
+        cli::cli_text("Type: {.emph Python} Shiny")
         cli::cli_text("Run in {.emph Terminal}:")
-        cli::cli_code(sprintf('shiny run --reload --launch-browser "%s"', x$output_dir))
+        cli::cli_code(
+            sprintf('shiny run --reload --launch-browser "%s"', dir_path),
+            language = "bash"
+        )
     }
 
     # Add contents section
@@ -72,7 +98,7 @@ print.standalone_shinylive_app <- function(x, ...) {
 
     # Add location information
     cli::cli_text()
-    cli::cli_text("Location: {.file {x$output_dir}}")
+    cli::cli_text("Location: {.path {full_path}}")
 
     invisible(x)
 }

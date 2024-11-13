@@ -112,7 +112,7 @@ print.quarto_shinylive_apps <- function(x, ...) {
         # Step: Preview document
         cli::cli_text()
         cli::cli_text("{.strong Step {current_step}:} Preview the document:")
-        cli::cli_code('quarto preview "{doc_name}"', language = "bash")
+        cli::cli_code(sprintf('quarto preview "%s"', doc_name), language = "bash")
 
         # Add summary of contained apps
         cli::cli_text()

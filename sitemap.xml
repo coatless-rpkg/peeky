@@ -1,6 +1,8 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/404.html</loc></url>
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/LICENSE.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/articles/behind-the-scenes.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/articles/index.html</loc></url>
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/authors.html</loc></url>
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/index.html</loc></url>
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/create_quarto_shinylive_apps.html</loc></url>

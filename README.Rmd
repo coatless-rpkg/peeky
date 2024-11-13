@@ -21,19 +21,18 @@ knitr::opts_chunk$set(
 
 The `peeky` package helps you extract, examine, and run the source code from Shiny 
 applications that have been converted to run in the browser using [Shinylive][slexplain].
-It works with both standalone converted applications and [Quarto][quarto] documents
-containing converted Shiny components through the [quarto-shinylive][qsl] extension.
-This package supports both R and Python Shiny applications that have been 
-converted to Shinylive.
+It works with both standalone applications and [Quarto][quarto] documents 
+containing Shinylive components through the [quarto-shinylive][qsl] extension,
+supporting both R and Python Shiny applications.
 
-## What is Shinylive?
+## About Shinylive
 
-[Shinylive][slexplain] is groundbreaking technology that converts existing Shiny applications
-to run entirely in the web browser using [WebAssembly][wasm], eliminating the need for a
-hosted server. At its core, a Shinylive app is simply a converted 
-Shiny application - the same application you'd normally run on a server, but 
-transformed to execute directly in the user's browser through [webR][webr] for
-R applications or [Pyodide][pyodide] for Python applications.
+[Shinylive][slexplain] converts existing Shiny applications
+to run entirely in the web browser using [WebAssembly][wasm] versions of
+R ([webR][webr]) and Python ([Pyodide][pyodide]), eliminating the 
+need for a computational server. This means all 
+application files are accessible to users by design as they are downloaded
+to the user's browser when the application is loaded.
 
 The Shinylive ecosystem consists of four main components: 
 
@@ -75,16 +74,14 @@ To use the package, load it into your R session:
 library(peeky)
 ```
 
-Inside the package, there are three main functions summarized in the table below:
+Inside the package, there are three main functions:
 
-| Feature | `peek_shinylive_app()` | `peek_standalone_shinylive_app()` | `peek_quarto_shinylive_app()` |
-|---------|:---------------------:|:--------------------------------:|:-----------------------------:|
-| Handles standalone apps | ✓ | ✓ | ✗ |
-| Handles Quarto docs | ✓ | ✗ | ✓ |
-| Auto-detects type | ✓ | ✗ | ✗ |
-| Multiple apps per page | ✓ | ✗ | ✓ |
-| Custom output path | ✓ | ✓ | ✓ |
-| Quarto format output | ✓ | ✗ | ✓ |
+| Function | Description |
+|----------|-------------|
+| `peek_shinylive_app()` | Universal function that handles both standalone apps and Quarto docs |
+| `peek_standalone_shinylive_app()` | Specifically for standalone Shinylive applications |
+| `peek_quarto_shinylive_app()` | Specifically for Quarto documents with Shinylive components |
+
 
 ### Extracting Shinylive Applications
 
@@ -105,7 +102,7 @@ peeky::peek_quarto_shinylive_app("https://quarto-ext.github.io/shinylive/")
 ```
 
 By default, the extracted files will be placed in the current working directory
-under the `converted_apps` directory. Each application will be placed in a
+under the `converted_shiny_apps` directory. Each application will be placed in a
 subdirectory named `app_1`, `app_2`, etc. If we want to specify a different
 output directory, we can do so by providing the `output_path` argument. We
 can also specify the output format as `quarto` to extract the files into a
@@ -119,7 +116,7 @@ single Quarto document.
 peeky::peek_quarto_shinylive_app("https://quarto-ext.github.io/shinylive/", output_format = "quarto")
 ```
 
-We can switch to the `peek_shinylive_standalone_app()` function if we know that
+We can switch to the `peek_standalone_shinylive_app()` function if we know that
 the URL is a standalone Shinylive application. For example, if we take the
 example application used in the conversion tutorial from [an app.R to an R Shinylive app](https://github.com/coatless-tutorials/convert-shiny-app-r-shinylive)
 on GitHub, we get:
@@ -134,30 +131,24 @@ peeky::peek_standalone_shinylive_app("https://tutorials.thecoatlessprofessor.com
 
 AGPL (>= 3)
 
-## Notes
-
-### Evolution from Previous Approaches
+## Evolution
 
 This package represents a more refined and comprehensive approach compared to 
 our [earlier tutorial][peeksl]
 that focused solely on standalone R Shinylive applications. 
 
-### Ethical Considerations
+## Ethical Considerations
 
-This package is intended for educational purposes and to promote understanding
-of web application visibility. Users should:
+This package is for educational purposes. Users should:
 
+- Use responsibly
 - Respect intellectual property rights
-- Use the tool responsibly
-- Understand that the ability to view source code doesn't imply permission to reuse it without proper attribution or licensing
-- Consider this knowledge when designing their own applications
+- Understand that viewable code doesn't imply permission to reuse
+- Consider this when designing their own applications
 
 ## Acknowledgements
 
-We greatly appreciate and are inspired by the work of the Shinylive team.
-We also thank the [webR][webr] and [Pyodide][pyodide] teams for their 
-contributions to the broader ecosystem of browser-based data science that makes
-tools like Shinylive possible.
+Thanks to the Shinylive team and the [webR](https://docs.r-wasm.org/webr/latest/) and [Pyodide](https://pyodide.org/en/stable/) teams for enabling browser-based data science.
 
 [quarto]: https://quarto.org
 [slexplain]: https://shiny.posit.co/py/docs/shinylive.html

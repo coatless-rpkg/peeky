@@ -50,11 +50,11 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The <code>peeky</code> package helps you extract, examine, and run the source code from Shiny applications that have been converted to run in the browser using <a href="https://shiny.posit.co/py/docs/shinylive.html" class="external-link">Shinylive</a>. It works with both standalone converted applications and <a href="https://quarto.org" class="external-link">Quarto</a> documents containing converted Shiny components through the <a href="https://github.com/quarto-ext/shinylive" class="external-link">quarto-shinylive</a> extension. This package supports both R and Python Shiny applications that have been converted to Shinylive.</p>
+<p>The <code>peeky</code> package helps you extract, examine, and run the source code from Shiny applications that have been converted to run in the browser using <a href="https://shiny.posit.co/py/docs/shinylive.html" class="external-link">Shinylive</a>. It works with both standalone applications and <a href="https://quarto.org" class="external-link">Quarto</a> documents containing Shinylive components through the <a href="https://github.com/quarto-ext/shinylive" class="external-link">quarto-shinylive</a> extension, supporting both R and Python Shiny applications.</p>
 <div class="section level2">
-<h2 id="what-is-shinylive">What is Shinylive?<a class="anchor" aria-label="anchor" href="#what-is-shinylive"></a>
+<h2 id="about-shinylive">About Shinylive<a class="anchor" aria-label="anchor" href="#about-shinylive"></a>
 </h2>
-<p><a href="https://shiny.posit.co/py/docs/shinylive.html" class="external-link">Shinylive</a> is groundbreaking technology that converts existing Shiny applications to run entirely in the web browser using <a href="https://webassembly.org/" class="external-link">WebAssembly</a>, eliminating the need for a hosted server. At its core, a Shinylive app is simply a converted Shiny application - the same application you’d normally run on a server, but transformed to execute directly in the user’s browser through <a href="https://docs.r-wasm.org/webr/latest/" class="external-link">webR</a> for R applications or <a href="https://pyodide.org/en/stable/" class="external-link">Pyodide</a> for Python applications.</p>
+<p><a href="https://shiny.posit.co/py/docs/shinylive.html" class="external-link">Shinylive</a> converts existing Shiny applications to run entirely in the web browser using <a href="https://webassembly.org/" class="external-link">WebAssembly</a> versions of R (<a href="https://docs.r-wasm.org/webr/latest/" class="external-link">webR</a>) and Python (<a href="https://pyodide.org/en/stable/" class="external-link">Pyodide</a>), eliminating the need for a computational server. This means all application files are accessible to users by design as they are downloaded to the user’s browser when the application is loaded.</p>
 <p>The Shinylive ecosystem consists of four main components:</p>
 <ul>
 <li>Shinylive Web Assets: <a href="https://github.com/posit-dev/shinylive" class="external-link">posit-dev/shinylive</a>
@@ -88,56 +88,28 @@
 <p>To use the package, load it into your R session:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-pkg.thecoatlessprofessor.com/peeky/">peeky</a></span><span class="op">)</span></span></code></pre></div>
-<p>Inside the package, there are three main functions summarized in the table below:</p>
+<p>Inside the package, there are three main functions:</p>
 <table class="table">
 <colgroup>
-<col width="25%">
-<col width="25%">
-<col width="25%">
-<col width="25%">
+<col width="50%">
+<col width="50%">
 </colgroup>
 <thead><tr class="header">
-<th>Feature</th>
-<th align="center"><code><a href="reference/peek_shinylive_app.html">peek_shinylive_app()</a></code></th>
-<th align="center"><code><a href="reference/peek_standalone_shinylive_app.html">peek_standalone_shinylive_app()</a></code></th>
-<th align="center"><code><a href="reference/peek_quarto_shinylive_app.html">peek_quarto_shinylive_app()</a></code></th>
+<th>Function</th>
+<th>Description</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Handles standalone apps</td>
-<td align="center">✓</td>
-<td align="center">✓</td>
-<td align="center">✗</td>
+<td><code><a href="reference/peek_shinylive_app.html">peek_shinylive_app()</a></code></td>
+<td>Universal function that handles both standalone apps and Quarto docs</td>
 </tr>
 <tr class="even">
-<td>Handles Quarto docs</td>
-<td align="center">✓</td>
-<td align="center">✗</td>
-<td align="center">✓</td>
+<td><code><a href="reference/peek_standalone_shinylive_app.html">peek_standalone_shinylive_app()</a></code></td>
+<td>Specifically for standalone Shinylive applications</td>
 </tr>
 <tr class="odd">
-<td>Auto-detects type</td>
-<td align="center">✓</td>
-<td align="center">✗</td>
-<td align="center">✗</td>
-</tr>
-<tr class="even">
-<td>Multiple apps per page</td>
-<td align="center">✓</td>
-<td align="center">✗</td>
-<td align="center">✓</td>
-</tr>
-<tr class="odd">
-<td>Custom output path</td>
-<td align="center">✓</td>
-<td align="center">✓</td>
-<td align="center">✓</td>
-</tr>
-<tr class="even">
-<td>Quarto format output</td>
-<td align="center">✓</td>
-<td align="center">✗</td>
-<td align="center">✓</td>
+<td><code><a href="reference/peek_quarto_shinylive_app.html">peek_quarto_shinylive_app()</a></code></td>
+<td>Specifically for Quarto documents with Shinylive components</td>
 </tr>
 </tbody>
 </table>
@@ -150,17 +122,17 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Shinylive Applications ──────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── Python Applications ──</span></span>
+<span><span class="co">#&gt; ── Shiny for Python Applications ──</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Run in Terminal:</span></span>
-<span><span class="co">#&gt; shiny run --reload --launch-browser "converted_shiny_app/app_1"</span></span>
-<span><span class="co">#&gt; shiny run --reload --launch-browser "converted_shiny_app/app_2"</span></span>
-<span><span class="co">#&gt; shiny run --reload --launch-browser "converted_shiny_app/app_3"</span></span>
-<span><span class="co">#&gt; shiny run --reload --launch-browser "converted_shiny_app/app_4"</span></span></code></pre></div>
+<span><span class="co">#&gt; shiny run --reload --launch-browser "/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app/app_1/app.py"</span></span>
+<span><span class="co">#&gt; shiny run --reload --launch-browser "/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app/app_2/app.py"</span></span>
+<span><span class="co">#&gt; shiny run --reload --launch-browser "/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app/app_3/app.py"</span></span>
+<span><span class="co">#&gt; shiny run --reload --launch-browser "/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app/app_4/app.py"</span></span></code></pre></div>
 <p>This would be equivalent to if we ran the following:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">peeky</span><span class="fu">::</span><span class="fu"><a href="reference/peek_quarto_shinylive_app.html">peek_quarto_shinylive_app</a></span><span class="op">(</span><span class="st">"https://quarto-ext.github.io/shinylive/"</span><span class="op">)</span></span></code></pre></div>
-<p>By default, the extracted files will be placed in the current working directory under the <code>converted_apps</code> directory. Each application will be placed in a subdirectory named <code>app_1</code>, <code>app_2</code>, etc. If we want to specify a different output directory, we can do so by providing the <code>output_path</code> argument. We can also specify the output format as <code>quarto</code> to extract the files into a single Quarto document.</p>
+<p>By default, the extracted files will be placed in the current working directory under the <code>converted_shiny_apps</code> directory. Each application will be placed in a subdirectory named <code>app_1</code>, <code>app_2</code>, etc. If we want to specify a different output directory, we can do so by providing the <code>output_path</code> argument. We can also specify the output format as <code>quarto</code> to extract the files into a single Quarto document.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Extract the Shinylive application into a different directory</span></span>
 <span><span class="fu">peeky</span><span class="fu">::</span><span class="fu"><a href="reference/peek_quarto_shinylive_app.html">peek_quarto_shinylive_app</a></span><span class="op">(</span><span class="st">"https://quarto-ext.github.io/shinylive/"</span>, output_format <span class="op">=</span> <span class="st">"quarto"</span><span class="op">)</span></span>
@@ -179,14 +151,14 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; • R applications: 0</span></span>
 <span><span class="co">#&gt; • Python applications: 4</span></span></code></pre></div>
-<p>We can switch to the <code>peek_shinylive_standalone_app()</code> function if we know that the URL is a standalone Shinylive application. For example, if we take the example application used in the conversion tutorial from <a href="https://github.com/coatless-tutorials/convert-shiny-app-r-shinylive" class="external-link">an app.R to an R Shinylive app</a> on GitHub, we get:</p>
+<p>We can switch to the <code><a href="reference/peek_standalone_shinylive_app.html">peek_standalone_shinylive_app()</a></code> function if we know that the URL is a standalone Shinylive application. For example, if we take the example application used in the conversion tutorial from <a href="https://github.com/coatless-tutorials/convert-shiny-app-r-shinylive" class="external-link">an app.R to an R Shinylive app</a> on GitHub, we get:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">peeky</span><span class="fu">::</span><span class="fu"><a href="reference/peek_standalone_shinylive_app.html">peek_standalone_shinylive_app</a></span><span class="op">(</span><span class="st">"https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Standalone Shinylive Application ────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; Type: R Shiny</span></span>
 <span><span class="co">#&gt; Run in R:</span></span>
-<span><span class="co">#&gt; shiny::runApp("converted_shiny_app")</span></span>
+<span><span class="co">#&gt; shiny::runApp("/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app")</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Contents ──</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -197,7 +169,7 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Total files: 2</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Location: 'converted_shiny_app'</span></span></code></pre></div>
+<span><span class="co">#&gt; Location: '/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app'</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -206,29 +178,25 @@
 <p>AGPL (&gt;= 3)</p>
 </div>
 <div class="section level2">
-<h2 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
+<h2 id="evolution">Evolution<a class="anchor" aria-label="anchor" href="#evolution"></a>
 </h2>
-<div class="section level3">
-<h3 id="evolution-from-previous-approaches">Evolution from Previous Approaches<a class="anchor" aria-label="anchor" href="#evolution-from-previous-approaches"></a>
-</h3>
 <p>This package represents a more refined and comprehensive approach compared to our <a href="https://github.com/coatless-tutorials/peeking-at-an-r-shinylive-app-source-code" class="external-link">earlier tutorial</a> that focused solely on standalone R Shinylive applications.</p>
 </div>
-<div class="section level3">
-<h3 id="ethical-considerations">Ethical Considerations<a class="anchor" aria-label="anchor" href="#ethical-considerations"></a>
-</h3>
-<p>This package is intended for educational purposes and to promote understanding of web application visibility. Users should:</p>
+<div class="section level2">
+<h2 id="ethical-considerations">Ethical Considerations<a class="anchor" aria-label="anchor" href="#ethical-considerations"></a>
+</h2>
+<p>This package is for educational purposes. Users should:</p>
 <ul>
+<li>Use responsibly</li>
 <li>Respect intellectual property rights</li>
-<li>Use the tool responsibly</li>
-<li>Understand that the ability to view source code doesn’t imply permission to reuse it without proper attribution or licensing</li>
-<li>Consider this knowledge when designing their own applications</li>
+<li>Understand that viewable code doesn’t imply permission to reuse</li>
+<li>Consider this when designing their own applications</li>
 </ul>
-</div>
 </div>
 <div class="section level2">
 <h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
 </h2>
-<p>We greatly appreciate and are inspired by the work of the Shinylive team. We also thank the <a href="https://docs.r-wasm.org/webr/latest/" class="external-link">webR</a> and <a href="https://pyodide.org/en/stable/" class="external-link">Pyodide</a> teams for their contributions to the broader ecosystem of browser-based data science that makes tools like Shinylive possible.</p>
+<p>Thanks to the Shinylive team and the <a href="https://docs.r-wasm.org/webr/latest/" class="external-link">webR</a> and <a href="https://pyodide.org/en/stable/" class="external-link">Pyodide</a> teams for enabling browser-based data science.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

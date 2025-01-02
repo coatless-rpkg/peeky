@@ -56,7 +56,7 @@ find_shinylive_app_json <- function(base_url) {
 
             # If this is already JSON content, verify it's a valid app.json
             if (grepl("application/json", httr::headers(resp)[["content-type"]], fixed = TRUE)) {
-                content <- httr::content(resp, "text")
+                content <- httr::content(resp, "text", encoding = "UTF-8")
                 # Try to parse as JSON and validate structure
                 json_data <- jsonlite::fromJSON(content, simplifyDataFrame = FALSE)
                 if (validate_app_json(json_data)) {

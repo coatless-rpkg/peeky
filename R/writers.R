@@ -1,3 +1,74 @@
+#' Write File Content in a Shinylive App to Disk
+#'
+#' Writes file content extracted from Shinylive applications to disk, handling both
+#' text and binary content appropriately. Creates any necessary parent directories
+#' and ensures proper encoding of content. For binary files, automatically decodes
+#' the base64-encoded content before writing.
+#'
+#' @param content Character string containing the file content. For binary files,
+#'   this should be base64-encoded content. For text files, this should be the raw
+#'   text content.
+#' @param file_path Character string specifying the path where the file should be
+#'   written. Parent directories will be created if they don't exist.
+#' @param type Character string specifying the file type, either "text" (default)
+#'   or "binary". Binary files are assumed to be base64 encoded, as this is the
+#'   standard format for binary content in Shinylive applications.
+#'
+#' @return Invisible NULL, called for its side effect of writing a file to disk.
+#'
+#' @details
+#' The function handles two types of content:
+#'
+#' * Text files (`type = "text"`):
+#'   - Content is converted to UTF-8 encoding using `enc2utf8()`
+#'   - Written using `writeLines()` with `useBytes = TRUE`
+#'
+#' * Binary files (`type = "binary"`):
+#'   - Content is decoded from base64 using `jsonlite::base64_dec()`
+#'   - Written as raw binary data using `writeBin()`
+#'
+#' Parent directories in the file path are automatically created if they don't
+#' exist using `fs::dir_create()` with `recurse = TRUE`.
+#'
+#' @examples
+#' \dontrun{
+#' # Writing a text file
+#' write_file_content(
+#'   content = "library(shiny)\n\nui <- fluidPage()",
+#'   file_path = "app/app.R",
+#'   type = "text"
+#' )
+#'
+#' # Writing a binary file (base64-encoded content)
+#' write_file_content(
+#'   content = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
+#'   file_path = "app/www/image.png",
+#'   type = "binary"
+#' )
+#' }
+#'
+#' @keywords internal
+write_file_content <- function(content, file_path, type = "text") {
+    # Ensure parent directory exists
+    parent_dir <- dirname(file_path)
+    if (!dir.exists(parent_dir)) {
+        fs::dir_create(parent_dir, recurse = TRUE)
+    }
+
+    # Handle content based on type
+    if (type == "binary") {
+        # Decode base64 content and write as binary
+        decoded <- jsonlite::base64_dec(content)
+        writeBin(decoded, file_path, useBytes = TRUE)
+    } else {
+        # Write as text
+        writeLines(enc2utf8(content), file_path, useBytes = TRUE)
+    }
+
+    invisible(NULL)
+}
+
+
 #' Write Shinylive Applications to a Quarto Document
 #'
 #' Converts a list of parsed Shinylive applications into a single Quarto document.
@@ -253,8 +324,7 @@ write_apps_to_quarto <- function(apps, qmd_path) {
 #' write_apps_to_dirs(apps, "extracted_apps")
 #' }
 write_apps_to_dirs <- function(apps, base_dir) {
-    fs::dir_create(base_dir)
-
+    fs::dir_create(base_dir, recurse = TRUE)
 
     # Calculate padding width based on number of apps
     number_padding <- padding_width(length(apps))
@@ -266,18 +336,19 @@ write_apps_to_dirs <- function(apps, base_dir) {
 
         # Create numbered subdirectory using dynamic padding
         app_dir <- file.path(base_dir, sprintf(dir_format, i))
-        fs::dir_create(app_dir)
+        fs::dir_create(app_dir, recurse = TRUE)
 
         # Write each file in the app
         for (file_name in names(app$files)) {
             file_data <- app$files[[file_name]]
             file_path <- file.path(app_dir, file_name)
 
-            # Ensure parent directory exists
-            fs::dir_create(dirname(file_path))
-
-            # Write file content
-            writeLines(file_data$content, file_path)
+            # Write file as either a binary or text file
+            write_file_content(
+                content = file_data$content,
+                file_path = file_path,
+                type = file_data$type
+            )
         }
 
         # Write metadata
@@ -379,12 +450,18 @@ write_apps_to_dirs <- function(apps, base_dir) {
 #' @keywords internal
 write_standalone_shinylive_app <- function(json_data, source_url, output_dir = "converted_shiny_app") {
     # Create output directory
-    fs::dir_create(output_dir)
+    fs::dir_create(output_dir, recurse = TRUE)
 
     # Extract files
     for (file in json_data) {
         file_path <- file.path(output_dir, file$name)
-        writeLines(file$content, file_path)
+
+        # Write file as either a binary or text file
+        write_file_content(
+            content = file$content,
+            file_path = file_path,
+            type = file$type
+        )
     }
 
     # Return standalone command object

@@ -89,7 +89,7 @@ peek_shinylive_app <- function(url, output_dir = "converted_shiny_app") {
 
     # If HTML, determine if it's a Quarto document
     if (grepl("text/html", content_type, fixed = TRUE)) {
-        html_content <- httr::content(resp, "text")
+        html_content <- httr::content(resp, "text", encoding = "UTF-8")
         doc <- rvest::read_html(html_content)
 
         # Check if it's a Quarto document (has main.content and quarto-specific elements)
@@ -215,7 +215,7 @@ peek_quarto_shinylive_app <- function(url,
         ))
     }
 
-    html_content <- httr::content(resp, "text")
+    html_content <- httr::content(resp, "text", encoding = "UTF-8")
 
     # Find and parse all shinylive code blocks
     apps <- find_shinylive_code(html_content)

@@ -59,7 +59,7 @@ write_file_content <- function(content, file_path, type = "text") {
     if (type == "binary") {
         # Decode base64 content and write as binary
         decoded <- jsonlite::base64_dec(content)
-        writeBin(decoded, file_path)
+        writeBin(decoded, file_path, useBytes = TRUE)
     } else {
         # Write as text
         writeLines(enc2utf8(content), file_path, useBytes = TRUE)

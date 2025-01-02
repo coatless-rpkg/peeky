@@ -58,25 +58,77 @@ Deployment.
 
 The first step in converting to Shinylive involves preparing your Shiny 
 application code. The core application logic remains largely unchanged, but
-there are some key considerations:
+there are some adjustments that may be required:
 
 - All dependencies must be available in WebAssembly format
   - Check if the R package is in the [webR package repository][webrpkg] (mobile intensive)
   - See if the Python package is apart of the [built-in Pyodide packages][pyodidepkg] or
     has a **pure Python** implementation that can be used directly from PyPI.
 - File paths need to be adjusted for browser context
-- External resources must be properly bundled
+  - Use relative paths to refer to scripts or data. 
+  - Keep data files in your app directory or one of its subdirectories.
+- External resources need to be retrieved using specific functions that
+  have been specially designed to work in the WebAssembly environment through
+  shims or are pre-packaged.
+  
+For example, in R, we could pre-package data with the application using:
+
+```r
+# Before: External data source
+api_data <- fetch_from_api("https://api.example.com/data")
+
+# After: Bundled data
+## Setup data
+api_data <- fetch_from_api("https://api.example.com/data")
+jsonlite::write_json(api_data, "data.json")  # Pre-bundled data
+
+# Retrieve data from bundle
+data <- jsonlite::fromJSON("data.json")
+```
+
+Alternatively, if the API permits [Cross-origin resource sharing (CORS)](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) and 
+can be switched to using `download.files()`, 
+then the data can be downloaded into the virtual system.
+
+```r
+# Before: External data source
+api_data <- fetch_from_api("https://api.example.com/data")
+
+# After: Using download.file to fetch data
+download.files("https://api.example.com/data", "data.json")
+data <- jsonlite::fromJSON("data.json")  # Pre-bundled data
+```
 
 ### Step 2: Conversion Process
 
-The conversion to Shinylive is automated by the 
+The conversion to Shinylive is automated by either the [{py-shinylive}][pyshinylive] or 
+[{r-shinylive}][rshinylive] packages.
+
+Specifically, we can convert a shiny application found in `myapp/` directory to
+a shinylive application via either:
+
+For R Shiny application, please type in the **R console**:
+
+```r
+# install.packages("shinylive")
+shinylive::export("myapp", "_site")
+```
+
+For Python Shiny application, please type in the **Terminal**:
+
+```sh
+# pip install shinylive
+shinylive export myapp _site
+```
+
+Behind the scenes, the `export` command is performing the following steps:
 
 1. **File Bundling**: All application files are collected and bundled together:
    - R/Python source code
    - Data files
    - Static assets (images, CSS, etc.)
 
-2. **Metadata Generation**: A `app.json` file is created containing:
+2. **Metadata Generation**: A `app.json` file is created containing the source:
    ```json
    [
      {
@@ -85,63 +137,86 @@ The conversion to Shinylive is automated by the
        "type": "text"
      },
      {
-       "name": "data.csv",
+       "name": "data/dataset.csv",
        "content": "col1,col2\n...",
+       "type": "text"
+     },
+     {
+       "name": "www/image.png",
+       "content": "iVBORw0KGgo...",
+       "type": "binary"
+     },
+     {
+       "name": "www/custom.css",
+       "content": ".custom-class { ... }",
        "type": "text"
      }
    ]
    ```
 
-3. **Runtime Preparation**: 
+3. **Runtime Preparation**: The converted application is integrated into a
+   viewer and/or editor alongside of the underlying language distribution.
    - For R: WebR environment is configured
    - For Python: Pyodide environment is set up
 
 ### Step 3: Browser Deployment
 
-The converted application now runs entirely in the browser:
+From here, the Shinylive application can be run locally through a Live Server
+or it can be placed on any static web server host that supports HTTPS URLs.
+Some common web server hosts for this kind of application are GitHub Pages or Netlify.
+
+Feel free to consult the following GitHub Pages Deployment tutorials:
+
+1. [Creating an R Shinylive App inside a Quarto Document](https://github.com/coatless-quarto/r-shinylive-demo)
+2. [Deploying an **R** Shinylive App via GitHub Pages through GitHub Actions](https://github.com/coatless-tutorials/convert-shiny-app-r-shinylive)
+3. [Deploying a **Python** Shinylive App via GitHub Pages through GitHub Actions](https://github.com/coatless-tutorials/convert-py-shiny-app-to-py-shinylive-app)
+
+With this being said, the converted application is now running entirely in the browser!
+Specifically, we have:
 
 1. WebR/Pyodide runtime initializes
 2. Application files are loaded from `app.json`
 3. UI renders and connects to a local runtime
-4. All computation happens client-side
+4. All computation in app happens client-side in their web browser
 
 ## Source Code Transparency
 
-Unlike traditional Shiny applications, Shinylive apps are inherently transparent. This transparency is a fundamental characteristic due to several factors:
+Unlike traditional Shiny applications, Shinylive apps are inherently transparent.
+This transparency is a fundamental characteristic due to several factors:
 
 1. **Client-Side Execution**: All code must be available in the browser
 2. **Bundled Resources**: All files are packaged in accessible formats
 3. **No Server Privacy**: No server-side code protection exists
 
+
 ## Extracting Source Code with `peeky`
 
 The `peeky` package leverages this transparency to extract source code from
-Shinylive applications. Here's how it works:
+Shinylive applications through the following functions:
 
-### Detection
-
-TODO: Clarify
-
-```r
-# URL of the Shinylive application
-url <- ""
-
-# Auto-detect and handle both standalone and Quarto-embedded apps
-peeky::peek_shinylive_app(url)
-```
-
-### Content Retrieval
-
-TODO: Clarify
-
-1. Downloads the webpage or app.json
-2. Identifies Shinylive components
-3. Extracts embedded code and resources
+- `peeky::peek_shinylive_app()`: Automatically retrieve either a standalone or
+  Quarto embedded Shinylive application.
+- `peeky::peek_standalone_shinylive_app()`: Retrieve a standalone Shinylive
+  application.
+- `peeky::peek_quarto_shinylive_app()`: Retrieve embedded Shinylive applications
+  in Quarto documents.
 
 ### File Reconstruction
 
 By default, extracted content is reconstructed into runnable applications that
 have the directory structure of a standalone app with all of its components.
+
+```
+extracted_app/
+├── app.R                    # Main application code
+├── data/
+│   └── dataset.csv          # Data files
+├── www/
+│   ├── image.png            # Static assets
+│   └── custom.css
+└── shinylive_metadata.json  # Configuration and metadata (Quarto-apps only)
+```
+
 If the application is embedded in a Quarto document, the extracted content can
 consist of one or more Shiny applications and, thus, is reconstructed into a
 into subdirectories, e.g. `app_1`, `app_2`, etc. Or, the content can be 
@@ -158,33 +233,41 @@ peeky::peek_quarto_shinylive_app(url, output_format = "app-dir")
 peeky::peek_quarto_shinylive_app(url, output_format = "quarto")
 ```
 
-## Security Implications
 
-This transparency has important implications for developers:
+### Security Implications
 
-1. **No Code Privacy**: All source code is accessible to users
+As a result of the ability to fetch and reconstruct the application locally,
+there are several important implications for developers:
+
+1. **No Code Privacy**: All source code is accessible to users.
 2. **Data Visibility**: Bundled datasets are accessible
 3. **API Keys**: Never include sensitive credentials
 4. **Business Logic**: Proprietary algorithms are visible
 
-## Best Practices
+## Best Practices for Deploying
 
-When developing Shinylive applications:
+As Shinylive is a new technology, the best practices are a work in progress. 
+We make the following suggestions 
+When moving to deploy a Shinylive applications, 
 
 1. **Assume Transparency**: Design with the understanding that code is visible
-2. **Handle Sensitive Data**: Process sensitive data server-side if needed
-3. **License Clearly**: Include clear licensing terms
-4. **Consider Hybrid Approaches**: Use traditional Shiny for sensitive components
-   and offload non-sensitive parts to Shinylive.
+2. **Avoid Handling Sensitive Data**: Do not use Shinylive with any 
+   Personal Identifiable Information (PII) data.
+3. **License Clearly**: Include explicit licensing terms as comments at the top
+   of the application.
+   
+If you must use sensitive data with Shinylive, consider using a **Hybrid Approach**
+to deployment. In particular, use traditional Shiny server for retrieving and
+releasing sensitive components and offload non-sensitive parts to Shinylive.
 
 ## Conclusion
 
 The transformation from traditional Shiny to Shinylive represents a fundamental
-shift in how web applications are delivered. While this brings advantages in 
+shift in how data web applications are delivered. While this brings advantages in 
 deployment and accessibility, it also requires developers to embrace 
 transparency and adjust their development practices accordingly. Tools like 
 `peeky` help demonstrate this transparency and can assist in understanding 
-how Shinylive applications work.
+how deployed Shinylive applications work.
 
 ## References
 
@@ -207,3 +290,5 @@ how Shinylive applications work.
 [wasm]: https://webassembly.org/
 [peekygh]: https://github.com/coatless-rpkg/peeky
 [protoslr]: https://github.com/georgestagg/shiny-standalone-webr-demo
+[pyshinylive]: https://pypi.org/project/shinylive/
+[rshinylive]: https://cran.r-project.org/package=shinylive

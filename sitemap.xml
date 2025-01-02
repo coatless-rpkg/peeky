@@ -5,6 +5,7 @@
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/articles/index.html</loc></url>
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/authors.html</loc></url>
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/index.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/news/index.html</loc></url>
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/create_quarto_shinylive_apps.html</loc></url>
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/create_standalone_shinylive_app.html</loc></url>
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/find_shinylive_app_json.html</loc></url>
@@ -22,6 +23,7 @@
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/validate_app_json.html</loc></url>
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/write_apps_to_dirs.html</loc></url>
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/write_apps_to_quarto.html</loc></url>
+<url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/write_file_content.html</loc></url>
 <url><loc>https://r-pkg.thecoatlessprofessor.com/peeky/reference/write_standalone_shinylive_app.html</loc></url>
 </urlset>
 

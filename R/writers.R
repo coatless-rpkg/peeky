@@ -39,12 +39,15 @@
 #'   type = "text"
 #' )
 #'
-#' # Writing a binary file (base64-encoded content)
-#' write_file_content(
-#'   content = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
-#'   file_path = "app/www/image.png",
-#'   type = "binary"
+#' # Write text content
+#' write_file_content("Hello, World!", "example.txt")
+#'
+#' # Write base64 encoded image
+#' b64img <- paste0(
+#'   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAA",
+#'   "DUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
 #' )
+#' write_file_content(b64img, "test.png", decode_base64 = TRUE)
 #' }
 #'
 #' @keywords internal

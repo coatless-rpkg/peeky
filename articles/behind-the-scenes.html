@@ -68,8 +68,10 @@
 
 
 
-    <header id="title-block-header" class="quarto-title-block"><h1 class="title">From Server-side to Browser-based Shiny Apps and Back Again</h1></header><p><a href="https://shiny.posit.co/py/docs/shinylive.html" class="external-link">Shinylive</a> represents a paradigm shift in how Shiny applications are deployed and executed. Instead of running on a <strong>computational</strong> server, these applications execute entirely within a web browser after being downloaded. This vignette explores the transformation process from a traditional Shiny application to a Shinylive application and explains how tools like <a href="https://github.com/coatless-rpkg/peeky" class="external-link"><code>peeky</code></a> can extract the source code from these browser-based applications.</p>
-<section class="section level4"><h4 id="the-traditional-shiny-model">The Traditional Shiny Model<a class="anchor" aria-label="anchor" href="#the-traditional-shiny-model"></a>
+    <header id="title-block-header" class="quarto-title-block"><h1 class="title">From Server-side to Browser-based Shiny Apps and Back Again</h1></header><section class="section level3"><h3 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h3>
+<p><a href="https://shiny.posit.co/py/docs/shinylive.html" class="external-link">Shinylive</a> represents a paradigm shift in how Shiny applications are deployed and executed. Instead of running on a <strong>computational</strong> server, these applications execute entirely within a web browser after being downloaded. This vignette explores the transformation process from a traditional Shiny application to a Shinylive application and explains how tools like <a href="https://github.com/coatless-rpkg/peeky" class="external-link"><code>peeky</code></a> can extract the source code from these browser-based applications.</p>
+<section class="level3"><h4 id="the-traditional-shiny-model">The Traditional Shiny Model<a class="anchor" aria-label="anchor" href="#the-traditional-shiny-model"></a>
 </h4>
 <p>In a traditional Shiny application:</p>
 <ol type="1">
@@ -98,7 +100,7 @@
 <figure><p><img src="https://talks.thecoatlessprofessor.com/stats352-guest-lectures-on-dynamic-interactions-wasm/assets/gifs/compute-server-running-r-once-smaller.gif"></p>
 <figcaption>Computational server sending the Shiny application’s rendered output and waiting for more commands.</figcaption></figure>
 </div>
-</section><section class="section level4"><h4 id="the-shinylive-transformation-from-server-to-browser">The Shinylive Transformation: From Server to Browser<a class="anchor" aria-label="anchor" href="#the-shinylive-transformation-from-server-to-browser"></a>
+</section><section class="level3"><h4 id="the-shinylive-transformation-from-server-to-browser">The Shinylive Transformation: From Server to Browser<a class="anchor" aria-label="anchor" href="#the-shinylive-transformation-from-server-to-browser"></a>
 </h4>
 <p>Shinylive represents a revolutionary approach to Shiny applications by enabling them to run entirely within a web browser. Unlike traditional Shiny apps that require continuous server communication, Shinylive applications operate like modern web pages—downloaded once and executed locally in the user’s browser.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -323,7 +325,7 @@
 </li>
 </ol>
 <p>This sequence provides a seamless, computation server-independent experience while maintaining the (nearly) full power and interactivity of Shiny applications.</p>
-</section></section></section><section class="section level4"><h4 id="understanding-and-extracting-shinylive-applications-with-peeky">Understanding and Extracting Shinylive Applications with <code>peeky</code>
+</section></section></section><section class="level3"><h4 id="understanding-and-extracting-shinylive-applications-with-peeky">Understanding and Extracting Shinylive Applications with <code>peeky</code>
 <a class="anchor" aria-label="anchor" href="#understanding-and-extracting-shinylive-applications-with-peeky"></a>
 </h4>
 <p>The <code>peeky</code> package provides tools to examine and extract source code from deployed Shinylive applications, leveraging their inherent transparency. This capability is valuable for learning, debugging, and understanding how successful Shinylive applications are structured.</p>
@@ -390,7 +392,7 @@
 <p>The client-side nature of these applications means that all source code—whether it’s R, Python, or SQL queries—becomes accessible to anyone with basic knowledge of browser developer tools or <code>peeky</code>. This exposure isn’t limited to just the code itself; it extends to bundled datasets, configuration files, and any other resources packaged with the application.</p>
 <p>Security-critical elements like API keys, database credentials, and authentication tokens require special handling. Including these in client-side code is equivalent to making them public, as they can be easily extracted from the browser’s memory or network requests. Such sensitive credentials should always be managed through secure server-side mechanisms.</p>
 <p>Perhaps even more critically, organizations must carefully assess how they handle proprietary intellectual property. Any business logic, algorithms, or unique computational methods implemented in client-side code become vulnerable to inspection and replication. This creates a fundamental tension between the convenience of client-side processing and the need to protect valuable intellectual property. Organizations should conduct thorough risk assessments to determine which components can safely run in the browser and which must be protected behind server-side APIs. Complex algorithms, sensitive business rules, and proprietary calculations are often better suited for server-side implementation where they remain shielded from reverse engineering.</p>
-</section></section><section class="section level3"><h3 id="best-practices-for-deployment">Best Practices for Deployment<a class="anchor" aria-label="anchor" href="#best-practices-for-deployment"></a>
+</section></section></section><section class="section level3"><h3 id="best-practices-for-deployment">Best Practices for Deployment<a class="anchor" aria-label="anchor" href="#best-practices-for-deployment"></a>
 </h3>
 <p>While Shinylive represents an exciting advancement in browser-based applications, the best practices are a work in progress. We suggest organizations looking to adopt Shinylive look toward the following guidelines…</p>
 <section class="level3"><h4 id="design-for-transparency">Design for Transparency<a class="anchor" aria-label="anchor" href="#design-for-transparency"></a>

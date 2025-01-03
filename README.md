@@ -185,7 +185,6 @@ This package is for educational purposes. Users should:
 
 ## Acknowledgements
 
-Thanks to the Shinylive team and the
-[webR](https://docs.r-wasm.org/webr/latest/) and
-[Pyodide](https://pyodide.org/en/stable/) teams for enabling
+Thanks to the Shinylive, [webR](https://docs.r-wasm.org/webr/latest/)
+and [Pyodide](https://pyodide.org/en/stable/) teams for enabling
 browser-based data science.

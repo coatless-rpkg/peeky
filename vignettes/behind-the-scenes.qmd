@@ -470,6 +470,10 @@ thoughtful protection of intellectual property and sensitive data. As the ecosys
 matures, we expect to see emerging patterns and best practices that help developers
 navigate these considerations effectively.
 
+## Acknowledgements
+
+Thanks to the Shinylive, [webR](https://docs.r-wasm.org/webr/latest/) and [Pyodide](https://pyodide.org/en/stable/) teams for enabling browser-based data science.
+
 ## References
 
 1. [Shinylive overview][slexplain]
@@ -484,7 +488,7 @@ navigate these considerations effectively.
 [slexplain]: https://shiny.posit.co/py/docs/shinylive.html
 [qsl]: https://github.com/quarto-ext/shinylive
 [webr]: https://docs.r-wasm.org/webr/latest/
-[webrpkg]: https://repos.r-wasm.org
+[webrpkg]: https://repo.r-wasm.org/
 [pyodide]: https://pyodide.org/en/stable/
 [pyodidepkg]: https://pyodide.org/en/stable/usage/packages-in-pyodide.html
 [peeksl]: https://github.com/coatless-tutorials/peeking-at-an-r-shinylive-app-source-code

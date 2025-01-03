@@ -21,5 +21,8 @@ RoxygenNote: 7.3.2
 Suggests: 
     knitr,
     rmarkdown,
-    quarto
+    quarto,
+    withr,
+    testthat (>= 3.0.0)
 VignetteBuilder: quarto
+Config/testthat/edition: 3

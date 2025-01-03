@@ -54,15 +54,12 @@ write_file_content(
   type = "text"
 )
 
-# Write text content
-write_file_content("Hello, World!", "example.txt")
-
 # Write base64 encoded image
 b64img <- paste0(
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAA",
   "DUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
 )
-write_file_content(b64img, "test.png", decode_base64 = TRUE)
+write_file_content(b64img, "test.png", type = "binary")
 }
 
 }

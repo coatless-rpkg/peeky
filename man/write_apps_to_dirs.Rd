@@ -47,15 +47,15 @@ The function performs these steps:
 Creates a directory structure like:
 
 \if{html}{\out{<div class="sourceCode sh">}}\preformatted{base_dir/
-  ├── app_01/
-  │   ├── app.R
-  │   ├── data/
-  │   │   └── example.csv
-  │   └── shinylive_metadata.json
-  ├── app_02/
-  │   ├── app.py
-  │   └── shinylive_metadata.json
-  └── ...
+|-- app_01/
+|   |-- app.R
+|   |-- data/
+|   |   `-- example.csv
+|   `-- shinylive_metadata.json
+|-- app_02/
+|   |-- app.py
+|   `-- shinylive_metadata.json
+`-- ...
 }\if{html}{\out{</div>}}
 }
 

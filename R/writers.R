@@ -92,6 +92,7 @@ write_file_content <- function(content, file_path, type = "text") {
 #' @section Document Structure:
 #'
 #' Creates a Quarto document with this structure:
+#'
 #' ````markdown
 #' ---
 #' title: Extracted Shinylive Applications
@@ -263,15 +264,15 @@ write_apps_to_quarto <- function(apps, qmd_path) {
 #'
 #' ```sh
 #' base_dir/
-#'   ├── app_01/
-#'   │   ├── app.R
-#'   │   ├── data/
-#'   │   │   └── example.csv
-#'   │   └── shinylive_metadata.json
-#'   ├── app_02/
-#'   │   ├── app.py
-#'   │   └── shinylive_metadata.json
-#'   └── ...
+#' |-- app_01/
+#' |   |-- app.R
+#' |   |-- data/
+#' |   |   `-- example.csv
+#' |   `-- shinylive_metadata.json
+#' |-- app_02/
+#' |   |-- app.py
+#' |   `-- shinylive_metadata.json
+#' `-- ...
 #' ```
 #'
 #' @section Metadata File:

@@ -54,7 +54,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1></h1>
+      <h1>From Server-side to Browser-based Shiny Apps and Back Again</h1>
 
       <p class="author">James Joseph Balamuta</p>
 
@@ -68,11 +68,11 @@
 
 
 
-    <header id="title-block-header" class="quarto-title-block"><h1 class="title">From Server-side to Browser-based Shiny Apps and Back Again</h1></header><section class="section level3"><h3 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
-</h3>
+    <section class="level2"><h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
 <p><a href="https://shiny.posit.co/py/docs/shinylive.html" class="external-link">Shinylive</a> represents a paradigm shift in how Shiny applications are deployed and executed. Instead of running on a <strong>computational</strong> server, these applications execute entirely within a web browser after being downloaded. This vignette explores the transformation process from a traditional Shiny application to a Shinylive application and explains how tools like <a href="https://github.com/coatless-rpkg/peeky" class="external-link"><code>peeky</code></a> can extract the source code from these browser-based applications.</p>
-<section class="level3"><h4 id="the-traditional-shiny-model">The Traditional Shiny Model<a class="anchor" aria-label="anchor" href="#the-traditional-shiny-model"></a>
-</h4>
+<section class="level3"><h3 id="the-traditional-shiny-model">The Traditional Shiny Model<a class="anchor" aria-label="anchor" href="#the-traditional-shiny-model"></a>
+</h3>
 <p>In a traditional Shiny application:</p>
 <ol type="1">
 <li>Source code resides on a <strong>computational</strong> server</li>
@@ -100,19 +100,19 @@
 <figure><p><img src="https://talks.thecoatlessprofessor.com/stats352-guest-lectures-on-dynamic-interactions-wasm/assets/gifs/compute-server-running-r-once-smaller.gif"></p>
 <figcaption>Computational server sending the Shiny application’s rendered output and waiting for more commands.</figcaption></figure>
 </div>
-</section><section class="level3"><h4 id="the-shinylive-transformation-from-server-to-browser">The Shinylive Transformation: From Server to Browser<a class="anchor" aria-label="anchor" href="#the-shinylive-transformation-from-server-to-browser"></a>
-</h4>
+</section><section class="level3"><h3 id="the-shinylive-transformation-from-server-to-browser">The Shinylive Transformation: From Server to Browser<a class="anchor" aria-label="anchor" href="#the-shinylive-transformation-from-server-to-browser"></a>
+</h3>
 <p>Shinylive represents a revolutionary approach to Shiny applications by enabling them to run entirely within a web browser. Unlike traditional Shiny apps that require continuous server communication, Shinylive applications operate like modern web pages—downloaded once and executed locally in the user’s browser.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img src="https://talks.thecoatlessprofessor.com/stats352-guest-lectures-on-dynamic-interactions-wasm/assets/gifs/webserver-sending-r-once-smaller.gif"></p>
 <figcaption>Static webserver sending <strong>all</strong> the Shinylive application files to be unpacked and run in the user’s web browser</figcaption></figure>
 </div>
 <p>This transformation involves arguably three key steps: Code Preparation, Conversion Process, and Browser Deployment.</p>
-<section class="level4"><h5 id="step-1-code-preparation">Step 1: Code Preparation<a class="anchor" aria-label="anchor" href="#step-1-code-preparation"></a>
-</h5>
+<section class="level4"><h4 id="step-1-code-preparation">Step 1: Code Preparation<a class="anchor" aria-label="anchor" href="#step-1-code-preparation"></a>
+</h4>
 <p>The initial phase of converting a Shiny application to Shinylive requires careful preparation of your application code. While most core Shiny functionality remains unchanged, several key areas need attention.</p>
-<section class="level5"><h6 id="dependency-management">Dependency Management<a class="anchor" aria-label="anchor" href="#dependency-management"></a>
-</h6>
+<section class="level5"><h5 id="dependency-management">Dependency Management<a class="anchor" aria-label="anchor" href="#dependency-management"></a>
+</h5>
 <p>Your application’s dependencies must be compatible with WebAssembly execution:</p>
 <p>For R applications:</p>
 <ul>
@@ -127,15 +127,15 @@
 </li>
 <li>For packages not in Pyodide, look for pure Python alternatives on PyPI</li>
 <li>Note that packages with C extensions typically won’t work unless specifically compiled for the WebAssembly version of Python.</li>
-</ul></section><section class="level5"><h6 id="file-system-considerations">File System Considerations<a class="anchor" aria-label="anchor" href="#file-system-considerations"></a>
-</h6>
+</ul></section><section class="level5"><h5 id="file-system-considerations">File System Considerations<a class="anchor" aria-label="anchor" href="#file-system-considerations"></a>
+</h5>
 <p>Browser-based applications handle files differently than traditional server applications:</p>
 <ul>
 <li>Use relative paths for all file references</li>
 <li>Avoid assumptions about file system access or operating system-specific paths</li>
 <li>Maintain a clear directory structure with data files in the application directory</li>
-</ul></section><section class="level5"><h6 id="external-resource-management">External Resource Management<a class="anchor" aria-label="anchor" href="#external-resource-management"></a>
-</h6>
+</ul></section><section class="level5"><h5 id="external-resource-management">External Resource Management<a class="anchor" aria-label="anchor" href="#external-resource-management"></a>
+</h5>
 <p>Applications running in WebAssembly require specialized approaches for accessing external resources via an API due to browser security constraints and the WebAssembly runtime environment.</p>
 <p><strong>Pre-bundling Data</strong></p>
 <p>For static or infrequently updated data, bundle it directly with your application. This approach ensures reliable data access and faster initial loading.</p>
@@ -146,10 +146,10 @@
 <span><span class="co"># After: Using pre-bundled data</span></span>
 <span><span class="co"># During development:</span></span>
 <span><span class="va">api_data</span> <span class="op">&lt;-</span> <span class="fu">fetch_from_api</span><span class="op">(</span><span class="st">"https://api.example.com/data"</span><span class="op">)</span></span>
-<span><span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/read_json.html" class="external-link">write_json</a></span><span class="op">(</span><span class="va">api_data</span>, <span class="st">"data.json"</span><span class="op">)</span></span>
+<span><span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://jeroen.r-universe.dev/jsonlite/reference/read_json.html" class="external-link">write_json</a></span><span class="op">(</span><span class="va">api_data</span>, <span class="st">"data.json"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># In application:</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html" class="external-link">fromJSON</a></span><span class="op">(</span><span class="st">"data.json"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">fromJSON</a></span><span class="op">(</span><span class="st">"data.json"</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Dynamic Data Loading</strong></p>
 <p>For APIs that support Cross-origin resource sharing (CORS), you can fetch data directly by using <code><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file()</a></code> (replaced with a browser-compatible download method):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -158,13 +158,13 @@
 <span></span>
 <span><span class="co"># After: Browser-compatible download</span></span>
 <span><span class="fu">download.files</span><span class="op">(</span><span class="st">"https://api.example.com/data"</span>, <span class="st">"data.json"</span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html" class="external-link">fromJSON</a></span><span class="op">(</span><span class="st">"data.json"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">fromJSON</a></span><span class="op">(</span><span class="st">"data.json"</span><span class="op">)</span></span></code></pre></div>
 <p>To ease future maintanence, we suggest documenting any WebAssembly-specific modifications.</p>
-</section></section><section class="level4"><h5 id="step-2-the-conversion-process">Step 2: The Conversion Process<a class="anchor" aria-label="anchor" href="#step-2-the-conversion-process"></a>
-</h5>
+</section></section><section class="level4"><h4 id="step-2-the-conversion-process">Step 2: The Conversion Process<a class="anchor" aria-label="anchor" href="#step-2-the-conversion-process"></a>
+</h4>
 <p>Converting a Shiny application to Shinylive involves transforming your application into a browser-compatible format. This process is automated through dedicated conversion tools for both R and Python environments.</p>
-<section class="level5"><h6 id="initiating-the-conversion">Initiating the Conversion<a class="anchor" aria-label="anchor" href="#initiating-the-conversion"></a>
-</h6>
+<section class="level5"><h5 id="initiating-the-conversion">Initiating the Conversion<a class="anchor" aria-label="anchor" href="#initiating-the-conversion"></a>
+</h5>
 <p>We can convert a shiny application found in <code>myapp/</code> directory to a Shinylive application via either <a href="https://cran.r-project.org/package=shinylive" class="external-link">{r-shinylive}</a> or <a href="https://pypi.org/project/shinylive/" class="external-link">{py-shinylive}</a>.</p>
 <p><strong>For R Applications:</strong></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -183,8 +183,8 @@
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the application</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">shinylive</span> export myapp _site</span></code></pre></div>
-</section><section class="level5"><h6 id="behind-the-scenes">Behind the Scenes<a class="anchor" aria-label="anchor" href="#behind-the-scenes"></a>
-</h6>
+</section><section class="level5"><h5 id="behind-the-scenes">Behind the Scenes<a class="anchor" aria-label="anchor" href="#behind-the-scenes"></a>
+</h5>
 <p>The conversion process involves three unique stages described next.</p>
 <section class="level6"><h6 id="file-collection">File Collection<a class="anchor" aria-label="anchor" href="#file-collection"></a>
 </h6>
@@ -237,12 +237,12 @@
 <li>Establishes browser-Python interop mechanisms</li>
 </ul>
 <p>Each stage ensures that your application will run efficiently and reliably in a browser environment while maintaining (nearly) all its original functionality.</p>
-</section></section></section><section class="level4"><h5 id="step-3-browser-deployment-and-execution">Step 3: Browser Deployment and Execution<a class="anchor" aria-label="anchor" href="#step-3-browser-deployment-and-execution"></a>
-</h5>
+</section></section></section><section class="level4"><h4 id="step-3-browser-deployment-and-execution">Step 3: Browser Deployment and Execution<a class="anchor" aria-label="anchor" href="#step-3-browser-deployment-and-execution"></a>
+</h4>
 <p>Once converted, a Shinylive application can be deployed to any web server that supports HTTPS. This represents a significant departure from traditional Shiny hosting requirements, as the application now runs entirely in the user’s browser.</p>
 <p>That said, we still have a few choices to make regarding how it is “deployed” or shared.</p>
-<section class="level5"><h6 id="local-deployment">Local Deployment<a class="anchor" aria-label="anchor" href="#local-deployment"></a>
-</h6>
+<section class="level5"><h5 id="local-deployment">Local Deployment<a class="anchor" aria-label="anchor" href="#local-deployment"></a>
+</h5>
 <p>If we’re wanting this to be a local application, we cannot directly click on the generated HTML file to view the application (without modify browser security settings). Instead, we need to use a “Live Server” to view the application. This can be achieved with either:</p>
 <ul>
 <li>Use VSCode’s <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer" class="external-link">Live Server extension</a>
@@ -251,8 +251,8 @@
 <li>R’s <a href="https://github.com/rstudio/httpuv" class="external-link"><code>httpuv</code></a> package</li>
 </ul>
 <p>The latter two are suggested directly after conversion.</p>
-</section><section class="level5"><h6 id="global-deployment">Global Deployment<a class="anchor" aria-label="anchor" href="#global-deployment"></a>
-</h6>
+</section><section class="level5"><h5 id="global-deployment">Global Deployment<a class="anchor" aria-label="anchor" href="#global-deployment"></a>
+</h5>
 <p>If we can share our application, then any static hosting platforms will suffice. For example, we could use anyone of the following services to make our application available:</p>
 <ul>
 <li>
@@ -286,8 +286,8 @@
 <li>Python-specific considerations (e.g. <code>requirements.txt</code>)</li>
 </ul>
 </li>
-</ol></section></section><section class="level5"><h6 id="application-runtime-flow">Application Runtime Flow<a class="anchor" aria-label="anchor" href="#application-runtime-flow"></a>
-</h6>
+</ol></section></section><section class="level5"><h5 id="application-runtime-flow">Application Runtime Flow<a class="anchor" aria-label="anchor" href="#application-runtime-flow"></a>
+</h5>
 <p>Once deployed, the application follows this execution sequence:</p>
 <ol type="1">
 <li>
@@ -325,9 +325,9 @@
 </li>
 </ol>
 <p>This sequence provides a seamless, computation server-independent experience while maintaining the (nearly) full power and interactivity of Shiny applications.</p>
-</section></section></section><section class="level3"><h4 id="understanding-and-extracting-shinylive-applications-with-peeky">Understanding and Extracting Shinylive Applications with <code>peeky</code>
+</section></section></section><section class="level3"><h3 id="understanding-and-extracting-shinylive-applications-with-peeky">Understanding and Extracting Shinylive Applications with <code>peeky</code>
 <a class="anchor" aria-label="anchor" href="#understanding-and-extracting-shinylive-applications-with-peeky"></a>
-</h4>
+</h3>
 <p>The <code>peeky</code> package provides tools to examine and extract source code from deployed Shinylive applications, leveraging their inherent transparency. This capability is valuable for learning, debugging, and understanding how successful Shinylive applications are structured.</p>
 <p>There are three key functions for exploring a Shinylive application:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -349,8 +349,8 @@
 <span>  output_dir <span class="op">=</span> <span class="st">"extracted_quarto"</span>,</span>
 <span>  output_format <span class="op">=</span> <span class="st">"app-dir"</span>  <span class="co"># or "quarto"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<section class="level4"><h5 id="application-reconstruction">Application Reconstruction<a class="anchor" aria-label="anchor" href="#application-reconstruction"></a>
-</h5>
+<section class="level4"><h4 id="application-reconstruction">Application Reconstruction<a class="anchor" aria-label="anchor" href="#application-reconstruction"></a>
+</h4>
 <p>The extracted content is automatically reconstructed into a fully functional application structure.</p>
 <p>For example, with our motivating Shiny example, we would have:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sample-app/</span></span>
@@ -363,8 +363,8 @@
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── styles/</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   └── custom.css</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> shinylive_metadata.json  <span class="co"># Configuration (Quarto-apps only)</span></span></code></pre></div>
-</section><section class="level4"><h5 id="handling-quarto-embedded-applications">Handling Quarto-Embedded Applications<a class="anchor" aria-label="anchor" href="#handling-quarto-embedded-applications"></a>
-</h5>
+</section><section class="level4"><h4 id="handling-quarto-embedded-applications">Handling Quarto-Embedded Applications<a class="anchor" aria-label="anchor" href="#handling-quarto-embedded-applications"></a>
+</h4>
 <p>When working with Quarto documents containing multiple Shinylive applications, <code>peeky</code> offers two reconstruction approaches:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Extract as separate application directories</span></span>
@@ -386,31 +386,31 @@
 <span><span class="op">)</span></span>
 <span><span class="co"># Results in a single .qmd file containing all applications</span></span></code></pre></div>
 <p>This flexibility in extraction formats supports various use cases, from studying individual applications to reproducing complete Quarto documents with embedded Shinylive functionality.</p>
-</section><section class="level4"><h5 id="security-implications">Security Implications<a class="anchor" aria-label="anchor" href="#security-implications"></a>
-</h5>
+</section><section class="level4"><h4 id="security-implications">Security Implications<a class="anchor" aria-label="anchor" href="#security-implications"></a>
+</h4>
 <p>When deploying Shinylive applications that run entirely in the browser, developers must carefully consider the implications of client-side code transparency. Unlike traditional server-based applications, these browser-based apps can be downloaded, inspected, and reconstructed by users, creating unique security challenges.</p>
 <p>The client-side nature of these applications means that all source code—whether it’s R, Python, or SQL queries—becomes accessible to anyone with basic knowledge of browser developer tools or <code>peeky</code>. This exposure isn’t limited to just the code itself; it extends to bundled datasets, configuration files, and any other resources packaged with the application.</p>
 <p>Security-critical elements like API keys, database credentials, and authentication tokens require special handling. Including these in client-side code is equivalent to making them public, as they can be easily extracted from the browser’s memory or network requests. Such sensitive credentials should always be managed through secure server-side mechanisms.</p>
 <p>Perhaps even more critically, organizations must carefully assess how they handle proprietary intellectual property. Any business logic, algorithms, or unique computational methods implemented in client-side code become vulnerable to inspection and replication. This creates a fundamental tension between the convenience of client-side processing and the need to protect valuable intellectual property. Organizations should conduct thorough risk assessments to determine which components can safely run in the browser and which must be protected behind server-side APIs. Complex algorithms, sensitive business rules, and proprietary calculations are often better suited for server-side implementation where they remain shielded from reverse engineering.</p>
-</section></section></section><section class="section level3"><h3 id="best-practices-for-deployment">Best Practices for Deployment<a class="anchor" aria-label="anchor" href="#best-practices-for-deployment"></a>
-</h3>
+</section></section></section><section class="level2"><h2 id="best-practices-for-deployment">Best Practices for Deployment<a class="anchor" aria-label="anchor" href="#best-practices-for-deployment"></a>
+</h2>
 <p>While Shinylive represents an exciting advancement in browser-based applications, the best practices are a work in progress. We suggest organizations looking to adopt Shinylive look toward the following guidelines…</p>
-<section class="level3"><h4 id="design-for-transparency">Design for Transparency<a class="anchor" aria-label="anchor" href="#design-for-transparency"></a>
-</h4>
+<section class="level3"><h3 id="design-for-transparency">Design for Transparency<a class="anchor" aria-label="anchor" href="#design-for-transparency"></a>
+</h3>
 <p>Begin your development process with the understanding that all application code will be visible to users. This fundamental characteristic should inform decisions about what functionality to implement client-side versus server-side. Structure your code with this visibility in mind, including clear documentation and well-organized components that can withstand public scrutiny.</p>
-</section><section class="level3"><h4 id="data-and-algorithm-protection">Data and Algorithm Protection<a class="anchor" aria-label="anchor" href="#data-and-algorithm-protection"></a>
-</h4>
+</section><section class="level3"><h3 id="data-and-algorithm-protection">Data and Algorithm Protection<a class="anchor" aria-label="anchor" href="#data-and-algorithm-protection"></a>
+</h3>
 <p>Exercise extreme caution with sensitive information in Shinylive applications. Avoid including any Personal Identifiable Information (PII), protected health information (PHI), or confidential business data in the client-side portion of your application. Similarly, proprietary algorithms and critical business logic should not be implemented in the browser where they can be inspected and potentially replicated.</p>
-</section><section class="level3"><h4 id="clear-licensing-and-attribution">Clear Licensing and Attribution<a class="anchor" aria-label="anchor" href="#clear-licensing-and-attribution"></a>
-</h4>
+</section><section class="level3"><h3 id="clear-licensing-and-attribution">Clear Licensing and Attribution<a class="anchor" aria-label="anchor" href="#clear-licensing-and-attribution"></a>
+</h3>
 <p>Include explicit licensing terms in your application’s source code. Place these at the beginning of each of your files, clearly stating:</p>
 <ul>
 <li>The type of license (e.g., MIT, Apache, GPL)</li>
 <li>Copyright information</li>
 <li>Any usage restrictions or requirements</li>
 <li>Attribution requirements for dependencies</li>
-</ul></section><section class="level3"><h4 id="hybrid-deployment-strategy">Hybrid Deployment Strategy<a class="anchor" aria-label="anchor" href="#hybrid-deployment-strategy"></a>
-</h4>
+</ul></section><section class="level3"><h3 id="hybrid-deployment-strategy">Hybrid Deployment Strategy<a class="anchor" aria-label="anchor" href="#hybrid-deployment-strategy"></a>
+</h3>
 <p>For applications requiring both public and protected components, consider implementing a hybrid architecture:</p>
 <ul>
 <li>Use Shinylive for non-sensitive, computationally intensive operations that benefit from client-side processing</li>
@@ -419,15 +419,15 @@
 <li>Establish clear boundaries between public and private functionality</li>
 </ul>
 <p>This hybrid approach allows you to leverage Shinylive’s benefits while maintaining necessary security controls for sensitive operations. When implementing this strategy, ensure proper authentication and authorization mechanisms are in place for any server-side interactions.</p>
-</section><section class="level3"><h4 id="fin">Fin<a class="anchor" aria-label="anchor" href="#fin"></a>
-</h4>
+</section><section class="level3"><h3 id="fin">Fin<a class="anchor" aria-label="anchor" href="#fin"></a>
+</h3>
 <p>The transformation from traditional Shiny to Shinylive represents a fundamental shift in how data science applications are delivered. While this brings advantages in deployment and accessibility, it also requires developers to embrace transparency and adjust their development practices accordingly. Tools like <code>peeky</code> serve as powerful reminders of this transparency, offering developers insights into how their applications will be perceived and potentially analyzed by end users.</p>
 <p>Looking ahead, this paradigm shift suggests a future where data science applications are increasingly leveraging edge or client-side computation while maintaining careful boundaries around sensitive operations. Success in this new landscape requires balancing the benefits of browser-based execution with thoughtful protection of intellectual property and sensitive data. As the ecosystem matures, we expect to see emerging patterns and best practices that help developers navigate these considerations effectively.</p>
-</section></section><section class="section level3"><h3 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
-</h3>
+</section></section><section class="level2"><h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+</h2>
 <p>Thanks to the Shinylive, <a href="https://docs.r-wasm.org/webr/latest/" class="external-link">webR</a> and <a href="https://pyodide.org/en/stable/" class="external-link">Pyodide</a> teams for enabling browser-based data science.</p>
-</section><section class="section level3"><h3 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
-</h3>
+</section><section class="level2"><h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <ol type="1">
 <li><a href="https://shiny.posit.co/py/docs/shinylive.html" class="external-link">Shinylive overview</a></li>
 <li>

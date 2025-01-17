@@ -85,7 +85,7 @@ standard format for binary content in Shinylive applications.</p></dd>
     <p>The function handles two types of content:</p><ul><li><p>Text files (<code>type = "text"</code>):</p><ul><li><p>Content is converted to UTF-8 encoding using <code><a href="https://rdrr.io/r/base/Encoding.html" class="external-link">enc2utf8()</a></code></p></li>
 <li><p>Written using <code><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines()</a></code> with <code>useBytes = TRUE</code></p></li>
 </ul></li>
-<li><p>Binary files (<code>type = "binary"</code>):</p><ul><li><p>Content is decoded from base64 using <code><a href="https://rdrr.io/pkg/jsonlite/man/base64.html" class="external-link">jsonlite::base64_dec()</a></code></p></li>
+<li><p>Binary files (<code>type = "binary"</code>):</p><ul><li><p>Content is decoded from base64 using <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/base64.html" class="external-link">jsonlite::base64_dec()</a></code></p></li>
 <li><p>Written as raw binary data using <code><a href="https://rdrr.io/r/base/readBin.html" class="external-link">writeBin()</a></code></p></li>
 </ul></li>
 </ul><p>Parent directories in the file path are automatically created if they don't

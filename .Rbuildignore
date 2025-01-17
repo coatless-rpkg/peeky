@@ -9,3 +9,4 @@
 ^converted_shiny_app[s]?/*$
 ^converted_shiny_apps.qmd$
 ^README_cache/*$
+^cran-comments\.md$

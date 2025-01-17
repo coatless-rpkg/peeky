@@ -8,3 +8,4 @@ converted_shiny_app*/*
 *_cache/*
 converted_shiny_apps.qmd
 inst/doc
+CRAN-SUBMISSION

@@ -239,7 +239,7 @@ generated HTML file to view the application (without modify browser security set
 Instead, we need to use a "Live Server" to view the application. This
 can be achieved with either:
 
-- Use VSCode's [Live Server extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
+- Use VSCode's Live Server extension
 - Python's [`http.server`](https://docs.python.org/3/library/http.server.html) module
 - R's [`httpuv`](https://github.com/rstudio/httpuv) package
 

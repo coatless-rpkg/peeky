@@ -46,7 +46,9 @@ Parent directories in the file path are automatically created if they don't
 exist using \code{fs::dir_create()} with \code{recurse = TRUE}.
 }
 \examples{
-\dontrun{
+\dontshow{
+.old_wd <- setwd(tempdir()) # examplesTempdir 
+}
 # Writing a text file
 write_file_content(
   content = "library(shiny)\n\nui <- fluidPage()",
@@ -60,7 +62,7 @@ b64img <- paste0(
   "DUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
 )
 write_file_content(b64img, "test.png", type = "binary")
+\dontshow{
+setwd(.old_wd) # examplesTempdir 
 }
-
 }
-\keyword{internal}

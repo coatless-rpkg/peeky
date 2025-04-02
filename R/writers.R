@@ -30,8 +30,8 @@
 #' Parent directories in the file path are automatically created if they don't
 #' exist using `fs::dir_create()` with `recurse = TRUE`.
 #'
-#' @examples
-#' \dontrun{
+#' @export
+#' @examplesTempdir
 #' # Writing a text file
 #' write_file_content(
 #'   content = "library(shiny)\n\nui <- fluidPage()",
@@ -45,9 +45,6 @@
 #'   "DUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
 #' )
 #' write_file_content(b64img, "test.png", type = "binary")
-#' }
-#'
-#' @keywords internal
 write_file_content <- function(content, file_path, type = "text") {
     # Ensure parent directory exists
     parent_dir <- dirname(file_path)
@@ -136,9 +133,8 @@ write_file_content <- function(content, file_path, type = "text") {
 #'    - Properly closes the code block
 #' 3. Writes the complete document to the specified path
 #'
-#' @keywords internal
-#' @examples
-#' \dontrun{
+#' @export
+#' @examplesTempdir
 #' # Example apps list structure
 #' apps <- list(
 #'   list(
@@ -158,8 +154,6 @@ write_file_content <- function(content, file_path, type = "text") {
 #' )
 #'
 #' write_apps_to_quarto(apps, "applications.qmd")
-#' }
-#'
 #' @seealso
 #' * [write_apps_to_dirs()] for alternative directory output format
 write_apps_to_quarto <- function(apps, qmd_path) {
@@ -293,9 +287,8 @@ write_apps_to_quarto <- function(apps, qmd_path) {
 #' - [padding_width()] for directory number padding calculation
 #' - [write_apps_to_quarto()] for alternative Quarto output format
 #'
-#' @keywords internal
-#' @examples
-#' \dontrun{
+#' @export
+#' @examplesTempdir
 #' # Example apps list structure
 #' apps <- list(
 #'   list(
@@ -323,7 +316,6 @@ write_apps_to_quarto <- function(apps, qmd_path) {
 #' )
 #'
 #' write_apps_to_dirs(apps, "extracted_apps")
-#' }
 write_apps_to_dirs <- function(apps, base_dir) {
     fs::dir_create(base_dir, recurse = TRUE)
 
@@ -426,8 +418,8 @@ write_apps_to_dirs <- function(apps, base_dir) {
 #' - [create_standalone_shinylive_app()] for object creation
 #' - [validate_app_json()] for JSON data validation
 #'
-#' @examples
-#' \dontrun{
+#' @export
+#' @examplesTempdir
 #' # Example JSON data structure
 #' json_data <- list(
 #'   list(
@@ -447,8 +439,6 @@ write_apps_to_dirs <- function(apps, base_dir) {
 #'   "https://example.com/app.json",
 #'   "my_app"
 #' )
-#' }
-#' @keywords internal
 write_standalone_shinylive_app <- function(json_data, source_url, output_dir = "converted_shiny_app") {
     # Create output directory
     fs::dir_create(output_dir, recurse = TRUE)

@@ -72,7 +72,9 @@ Expected JSON data structure:
 }
 
 \examples{
-\dontrun{
+\dontshow{
+.old_wd <- setwd(tempdir()) # examplesTempdir 
+}
 # Example JSON data structure
 json_data <- list(
   list(
@@ -92,6 +94,8 @@ app <- write_standalone_shinylive_app(
   "https://example.com/app.json",
   "my_app"
 )
+\dontshow{
+setwd(.old_wd) # examplesTempdir 
 }
 }
 \seealso{
@@ -100,4 +104,3 @@ app <- write_standalone_shinylive_app(
 \item \code{\link[=validate_app_json]{validate_app_json()}} for JSON data validation
 }
 }
-\keyword{internal}

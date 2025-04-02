@@ -75,7 +75,9 @@ Each directory includes a \code{shinylive_metadata.json} file containing:
 }
 
 \examples{
-\dontrun{
+\dontshow{
+.old_wd <- setwd(tempdir()) # examplesTempdir 
+}
 # Example apps list structure
 apps <- list(
   list(
@@ -103,6 +105,8 @@ apps <- list(
 )
 
 write_apps_to_dirs(apps, "extracted_apps")
+\dontshow{
+setwd(.old_wd) # examplesTempdir 
 }
 }
 \seealso{
@@ -111,4 +115,3 @@ write_apps_to_dirs(apps, "extracted_apps")
 \item \code{\link[=write_apps_to_quarto]{write_apps_to_quarto()}} for alternative Quarto output format
 }
 }
-\keyword{internal}

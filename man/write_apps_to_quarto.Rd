@@ -88,7 +88,9 @@ Options are converted to YAML format based on their type:
 }
 
 \examples{
-\dontrun{
+\dontshow{
+.old_wd <- setwd(tempdir()) # examplesTempdir 
+}
 # Example apps list structure
 apps <- list(
   list(
@@ -108,12 +110,12 @@ apps <- list(
 )
 
 write_apps_to_quarto(apps, "applications.qmd")
+\dontshow{
+setwd(.old_wd) # examplesTempdir 
 }
-
 }
 \seealso{
 \itemize{
 \item \code{\link[=write_apps_to_dirs]{write_apps_to_dirs()}} for alternative directory output format
 }
 }
-\keyword{internal}

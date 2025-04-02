@@ -3,26 +3,29 @@ Title: Download and Extract Shinylive Applications
 Version: 0.1.0
 Authors@R: 
     person("James Joseph", "Balamuta", , "james.balamuta@gmail.com", role = c("aut", "cre"))
-Description: Peeks into Quarto documents and standalone Shinylive applications
-    to download and extract their Shiny application source. Handles the
-    extraction of application files from app.json format into a directory structure.
+Description: Peek into published 'Shinylive' applications by retrieving their source code.
+    Supports downloading and extracting 'Shiny' application source from 
+    'Quarto' documents and standalone 'Shinylive' applications.
 URL: https://r-pkg.thecoatlessprofessor.com/peeky/, https://github.com/coatless-rpkg/peeky
 BugReports: https://github.com/coatless-rpkg/peeky/issues
+License: AGPL (>= 3)
 Imports: 
     jsonlite,
     httr,
     rvest,
     fs,
     cli
-License: AGPL (>= 3)
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
 Suggests: 
     knitr,
     rmarkdown,
     quarto,
     withr,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    rocleteer
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE, packages = c("rocleteer"))
+RoxygenNote: 7.3.2
 VignetteBuilder: quarto
 Config/testthat/edition: 3
+Remotes:
+  coatless-rpkg/rocleteer

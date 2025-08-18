@@ -76,7 +76,7 @@ Each directory includes a \code{shinylive_metadata.json} file containing:
 
 \examples{
 \dontshow{
-.old_wd <- setwd(tempdir()) # examplesTempdir 
+.old_wd <- setwd(tempdir()) # examplesTempdir
 }
 # Example apps list structure
 apps <- list(
@@ -106,7 +106,7 @@ apps <- list(
 
 write_apps_to_dirs(apps, "extracted_apps")
 \dontshow{
-setwd(.old_wd) # examplesTempdir 
+setwd(.old_wd) # examplesTempdir
 }
 }
 \seealso{

@@ -73,7 +73,7 @@ Expected JSON data structure:
 
 \examples{
 \dontshow{
-.old_wd <- setwd(tempdir()) # examplesTempdir 
+.old_wd <- setwd(tempdir()) # examplesTempdir
 }
 # Example JSON data structure
 json_data <- list(
@@ -95,7 +95,7 @@ app <- write_standalone_shinylive_app(
   "my_app"
 )
 \dontshow{
-setwd(.old_wd) # examplesTempdir 
+setwd(.old_wd) # examplesTempdir
 }
 }
 \seealso{

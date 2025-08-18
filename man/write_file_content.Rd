@@ -47,7 +47,7 @@ exist using \code{fs::dir_create()} with \code{recurse = TRUE}.
 }
 \examples{
 \dontshow{
-.old_wd <- setwd(tempdir()) # examplesTempdir 
+.old_wd <- setwd(tempdir()) # examplesTempdir
 }
 # Writing a text file
 write_file_content(
@@ -63,6 +63,6 @@ b64img <- paste0(
 )
 write_file_content(b64img, "test.png", type = "binary")
 \dontshow{
-setwd(.old_wd) # examplesTempdir 
+setwd(.old_wd) # examplesTempdir
 }
 }

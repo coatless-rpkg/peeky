@@ -89,7 +89,7 @@ Options are converted to YAML format based on their type:
 
 \examples{
 \dontshow{
-.old_wd <- setwd(tempdir()) # examplesTempdir 
+.old_wd <- setwd(tempdir()) # examplesTempdir
 }
 # Example apps list structure
 apps <- list(
@@ -111,7 +111,7 @@ apps <- list(
 
 write_apps_to_quarto(apps, "applications.qmd")
 \dontshow{
-setwd(.old_wd) # examplesTempdir 
+setwd(.old_wd) # examplesTempdir
 }
 }
 \seealso{

@@ -4,9 +4,9 @@
 \name{peeky-package}
 \alias{peeky}
 \alias{peeky-package}
-\title{peeky: Download and Extract Shinylive Applications}
+\title{peeky: Download and Extract 'shinylive' Applications}
 \description{
-Peeks into Quarto documents and standalone Shinylive applications to download and extract their Shiny application source. Handles the extraction of application files from app.json format into a directory structure.
+Peek into published 'shinylive' applications by retrieving their source code. Supports downloading and extracting 'shiny' application source from 'quarto' documents and standalone 'shinylive' applications.
 }
 \seealso{
 Useful links:

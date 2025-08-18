@@ -1,11 +1,11 @@
 Package: peeky
-Title: Download and Extract Shinylive Applications
+Title: Download and Extract 'shinylive' Applications
 Version: 0.1.0
 Authors@R: 
     person("James Joseph", "Balamuta", , "james.balamuta@gmail.com", role = c("aut", "cre"))
-Description: Peek into published 'Shinylive' applications by retrieving their source code.
-    Supports downloading and extracting 'Shiny' application source from 
-    'Quarto' documents and standalone 'Shinylive' applications.
+Description: Peek into published 'shinylive' applications by retrieving their source code.
+    Supports downloading and extracting 'shiny' application source from 
+    'quarto' documents and standalone 'shinylive' applications.
 URL: https://r-pkg.thecoatlessprofessor.com/peeky/, https://github.com/coatless-rpkg/peeky
 BugReports: https://github.com/coatless-rpkg/peeky/issues
 License: AGPL (>= 3)

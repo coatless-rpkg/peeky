@@ -25,6 +25,15 @@ create_quarto_shinylive_apps <- function(apps, output_format, output_path) {
 #' @param ... Additional arguments passed to print
 #'
 #' @export
+#' @return
+#' Invisibly returns the original object of class \code{quarto_shinylive_apps}.
+#' Primarily called for its side effect of displaying formatted information about:
+#' \itemize{
+#'   \item Application types (R/Python)
+#'   \item Commands to run each application
+#'   \item File contents and organization
+#'   \item Output locations
+#' }
 print.quarto_shinylive_apps <- function(x, ...) {
 
     # Style definitions

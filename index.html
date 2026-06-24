@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Download and Extract shinylive Applications • peeky</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Download and Extract shinylive Applications">
 <meta name="description" content="Peek into published shinylive applications by retrieving their source code. Supports downloading and extracting shiny application source from quarto documents and standalone shinylive applications.">
@@ -57,11 +57,11 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The <code>peeky</code> package helps you extract, examine, and run the source code from Shiny applications that have been converted to run in the browser using <a href="https://shiny.posit.co/py/docs/shinylive.html" class="external-link">Shinylive</a>. It works with both standalone applications and <a href="https://quarto.org" class="external-link">Quarto</a> documents containing Shinylive components through the <a href="https://github.com/quarto-ext/shinylive" class="external-link">quarto-shinylive</a> extension, supporting both R and Python Shiny applications.</p>
+<p>The <code>peeky</code> package helps you extract, examine, and run the source code from Shiny applications that have been converted to run in the browser using <a href="https://shiny.posit.co/py/get-started/shinylive.html" class="external-link">Shinylive</a>. It works with both standalone applications and <a href="https://quarto.org" class="external-link">Quarto</a> documents containing Shinylive components through the <a href="https://github.com/quarto-ext/shinylive" class="external-link">quarto-shinylive</a> extension, supporting both R and Python Shiny applications.</p>
 <div class="section level2">
 <h2 id="about-shinylive">About Shinylive<a class="anchor" aria-label="anchor" href="#about-shinylive"></a>
 </h2>
-<p><a href="https://shiny.posit.co/py/docs/shinylive.html" class="external-link">Shinylive</a> converts existing Shiny applications to run entirely in the web browser using <a href="https://webassembly.org/" class="external-link">WebAssembly</a> versions of R (<a href="https://docs.r-wasm.org/webr/latest/" class="external-link">webR</a>) and Python (<a href="https://pyodide.org/en/stable/" class="external-link">Pyodide</a>), eliminating the need for a computational server. This means all application files are accessible to users by design as they are downloaded to the user’s browser when the application is loaded.</p>
+<p><a href="https://shiny.posit.co/py/get-started/shinylive.html" class="external-link">Shinylive</a> converts existing Shiny applications to run entirely in the web browser using <a href="https://webassembly.org/" class="external-link">WebAssembly</a> versions of R (<a href="https://docs.r-wasm.org/webr/latest/" class="external-link">webR</a>) and Python (<a href="https://pyodide.org/en/stable/" class="external-link">Pyodide</a>), eliminating the need for a computational server. This means all application files are accessible to users by design as they are downloaded to the user’s browser when the application is loaded.</p>
 <p>The Shinylive ecosystem consists of four main components:</p>
 <ul>
 <li>Shinylive Web Assets: <a href="https://github.com/posit-dev/shinylive" class="external-link">posit-dev/shinylive</a>
@@ -101,20 +101,20 @@
 <col width="50%">
 <col width="50%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th>Function</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><code><a href="reference/peek_shinylive_app.html">peek_shinylive_app()</a></code></td>
 <td>Universal function that handles both standalone apps and Quarto docs</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code><a href="reference/peek_standalone_shinylive_app.html">peek_standalone_shinylive_app()</a></code></td>
 <td>Specifically for standalone Shinylive applications</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code><a href="reference/peek_quarto_shinylive_app.html">peek_quarto_shinylive_app()</a></code></td>
 <td>Specifically for Quarto documents with Shinylive components</td>
 </tr>
@@ -125,34 +125,46 @@
 </h3>
 <p>We suggest using the <code><a href="reference/peek_shinylive_app.html">peek_shinylive_app()</a></code> function as it can handle both standalone Shinylive applications and Quarto documents with Shinylive components. For instance, if we take the main Shinylive extension website, we get:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">peeky</span><span class="fu">::</span><span class="fu"><a href="reference/peek_shinylive_app.html">peek_shinylive_app</a></span><span class="op">(</span><span class="st">"https://quarto-ext.github.io/shinylive/"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Choose where the files are written (here, a temporary directory)</span></span>
+<span><span class="va">out_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"shinylive-apps"</span><span class="op">)</span></span>
+<span><span class="fu">peeky</span><span class="fu">::</span><span class="fu"><a href="reference/peek_shinylive_app.html">peek_shinylive_app</a></span><span class="op">(</span><span class="st">"https://quarto-ext.github.io/shinylive/"</span>, output_dir <span class="op">=</span> <span class="va">out_dir</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Shinylive Applications ──────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Shiny for Python Applications ──</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Run in Terminal:</span></span>
-<span><span class="co">#&gt; shiny run --reload --launch-browser "/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app/app_1/app.py"</span></span>
-<span><span class="co">#&gt; shiny run --reload --launch-browser "/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app/app_2/app.py"</span></span>
-<span><span class="co">#&gt; shiny run --reload --launch-browser "/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app/app_3/app.py"</span></span>
-<span><span class="co">#&gt; shiny run --reload --launch-browser "/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app/app_4/app.py"</span></span></code></pre></div>
+<span><span class="co">#&gt; shiny run --reload --launch-browser "/tmp/RtmpXXXXXX/shinylive-apps/app_1/app.py"</span></span>
+<span><span class="co">#&gt; shiny run --reload --launch-browser "/tmp/RtmpXXXXXX/shinylive-apps/app_2/app.py"</span></span>
+<span><span class="co">#&gt; shiny run --reload --launch-browser "/tmp/RtmpXXXXXX/shinylive-apps/app_3/app.py"</span></span>
+<span><span class="co">#&gt; shiny run --reload --launch-browser "/tmp/RtmpXXXXXX/shinylive-apps/app_4/app.py"</span></span></code></pre></div>
 <p>This would be equivalent to if we ran the following:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">peeky</span><span class="fu">::</span><span class="fu"><a href="reference/peek_quarto_shinylive_app.html">peek_quarto_shinylive_app</a></span><span class="op">(</span><span class="st">"https://quarto-ext.github.io/shinylive/"</span><span class="op">)</span></span></code></pre></div>
-<p>By default, the extracted files will be placed in the current working directory under the <code>converted_shiny_apps</code> directory. Each application will be placed in a subdirectory named <code>app_1</code>, <code>app_2</code>, etc. If we want to specify a different output directory, we can do so by providing the <code>output_path</code> argument. We can also specify the output format as <code>quarto</code> to extract the files into a single Quarto document.</p>
+<code class="sourceCode R"><span><span class="fu">peeky</span><span class="fu">::</span><span class="fu"><a href="reference/peek_quarto_shinylive_app.html">peek_quarto_shinylive_app</a></span><span class="op">(</span></span>
+<span>  <span class="st">"https://quarto-ext.github.io/shinylive/"</span>,</span>
+<span>  output_path <span class="op">=</span> <span class="va">out_dir</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>The output location is a required argument, so the package never writes to your working directory unless you ask it to: a relative path such as <code>"my-apps"</code> is created under the current working directory, while an absolute path is used as-is. Each application is placed in a subdirectory named <code>app_1</code>, <code>app_2</code>, etc. We can also set the output format to <code>quarto</code> to extract the files into a single Quarto document.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Extract the Shinylive application into a different directory</span></span>
-<span><span class="fu">peeky</span><span class="fu">::</span><span class="fu"><a href="reference/peek_quarto_shinylive_app.html">peek_quarto_shinylive_app</a></span><span class="op">(</span><span class="st">"https://quarto-ext.github.io/shinylive/"</span>, output_format <span class="op">=</span> <span class="st">"quarto"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Extract the applications into a single Quarto document</span></span>
+<span><span class="fu">peeky</span><span class="fu">::</span><span class="fu"><a href="reference/peek_quarto_shinylive_app.html">peek_quarto_shinylive_app</a></span><span class="op">(</span></span>
+<span>  <span class="st">"https://quarto-ext.github.io/shinylive/"</span>,</span>
+<span>  output_format <span class="op">=</span> <span class="st">"quarto"</span>,</span>
+<span>  output_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"shinylive-apps.qmd"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Quarto Document with Shinylive Applications ─────────────────────────────────</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Setup and Preview Steps ──</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Step 1: Install the Shinylive extension:</span></span>
+<span><span class="co">#&gt; Step 1: Change to the document directory:</span></span>
+<span><span class="co">#&gt; cd "/tmp/RtmpXXXXXX"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Step 2: Install the Shinylive extension:</span></span>
 <span><span class="co">#&gt; quarto add quarto-ext/shinylive</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Step 2: Preview the document:</span></span>
-<span><span class="co">#&gt; quarto preview "converted_shiny_apps.qmd"</span></span>
+<span><span class="co">#&gt; Step 3: Preview the document:</span></span>
+<span><span class="co">#&gt; quarto preview "shinylive-apps.qmd"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Contents ──</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -160,12 +172,15 @@
 <span><span class="co">#&gt; • Python applications: 4</span></span></code></pre></div>
 <p>We can switch to the <code><a href="reference/peek_standalone_shinylive_app.html">peek_standalone_shinylive_app()</a></code> function if we know that the URL is a standalone Shinylive application. For example, if we take the example application used in the conversion tutorial from <a href="https://github.com/coatless-tutorials/convert-shiny-app-r-shinylive" class="external-link">an app.R to an R Shinylive app</a> on GitHub, we get:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">peeky</span><span class="fu">::</span><span class="fu"><a href="reference/peek_standalone_shinylive_app.html">peek_standalone_shinylive_app</a></span><span class="op">(</span><span class="st">"https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">peeky</span><span class="fu">::</span><span class="fu"><a href="reference/peek_standalone_shinylive_app.html">peek_standalone_shinylive_app</a></span><span class="op">(</span></span>
+<span>  <span class="st">"https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/"</span>,</span>
+<span>  output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"standalone-app"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Standalone Shinylive Application ────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; Type: R Shiny</span></span>
 <span><span class="co">#&gt; Run in R:</span></span>
-<span><span class="co">#&gt; shiny::runApp("/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app")</span></span>
+<span><span class="co">#&gt; shiny::runApp("/tmp/RtmpXXXXXX/standalone-app")</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Contents ──</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -176,7 +191,7 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Total files: 2</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Location: '/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app'</span></span></code></pre></div>
+<span><span class="co">#&gt; Location: '/tmp/RtmpXXXXXX/standalone-app'</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -253,7 +268,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

@@ -92,28 +92,37 @@ For instance, if we take the main Shinylive extension website, we get:
 ```{r}
 #| label: peek-shinylive-app
 #| cache: true
-peeky::peek_shinylive_app("https://quarto-ext.github.io/shinylive/")
+# Choose where the files are written (here, a temporary directory)
+out_dir <- file.path(tempdir(), "shinylive-apps")
+peeky::peek_shinylive_app("https://quarto-ext.github.io/shinylive/", output_dir = out_dir)
 ```
 
 This would be equivalent to if we ran the following:
 
 ```r
-peeky::peek_quarto_shinylive_app("https://quarto-ext.github.io/shinylive/")
+peeky::peek_quarto_shinylive_app(
+  "https://quarto-ext.github.io/shinylive/",
+  output_path = out_dir
+)
 ```
 
-By default, the extracted files will be placed in the current working directory
-under the `converted_shiny_apps` directory. Each application will be placed in a
-subdirectory named `app_1`, `app_2`, etc. If we want to specify a different
-output directory, we can do so by providing the `output_path` argument. We
-can also specify the output format as `quarto` to extract the files into a
+The output location is a required argument, so the package never writes to your
+working directory unless you ask it to: a relative path such as `"my-apps"` is
+created under the current working directory, while an absolute path is used
+as-is. Each application is placed in a subdirectory named `app_1`, `app_2`,
+etc. We can also set the output format to `quarto` to extract the files into a
 single Quarto document.
 
 ```{r}
 #| label: peek-shinylive-app-output-dir
 #| cache: true
 
-# Extract the Shinylive application into a different directory
-peeky::peek_quarto_shinylive_app("https://quarto-ext.github.io/shinylive/", output_format = "quarto")
+# Extract the applications into a single Quarto document
+peeky::peek_quarto_shinylive_app(
+  "https://quarto-ext.github.io/shinylive/",
+  output_format = "quarto",
+  output_path = file.path(tempdir(), "shinylive-apps.qmd")
+)
 ```
 
 We can switch to the `peek_standalone_shinylive_app()` function if we know that
@@ -124,7 +133,10 @@ on GitHub, we get:
 ```{r}
 #| label: peek-shinylive-standalone-app
 #| cache: true
-peeky::peek_standalone_shinylive_app("https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/")
+peeky::peek_standalone_shinylive_app(
+  "https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/",
+  output_dir = file.path(tempdir(), "standalone-app")
+)
 ```
 
 ## License
@@ -151,7 +163,7 @@ This package is for educational purposes. Users should:
 Thanks to the Shinylive, [webR](https://docs.r-wasm.org/webr/latest/) and [Pyodide](https://pyodide.org/en/stable/) teams for enabling browser-based data science.
 
 [quarto]: https://quarto.org
-[slexplain]: https://shiny.posit.co/py/docs/shinylive.html
+[slexplain]: https://shiny.posit.co/py/get-started/shinylive.html
 [qsl]: https://github.com/quarto-ext/shinylive
 [webr]: https://docs.r-wasm.org/webr/latest/
 [pyodide]: https://pyodide.org/en/stable/

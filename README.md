@@ -10,7 +10,7 @@
 
 The `peeky` package helps you extract, examine, and run the source code
 from Shiny applications that have been converted to run in the browser
-using [Shinylive](https://shiny.posit.co/py/docs/shinylive.html). It
+using [Shinylive](https://shiny.posit.co/py/get-started/shinylive.html). It
 works with both standalone applications and [Quarto](https://quarto.org)
 documents containing Shinylive components through the
 [quarto-shinylive](https://github.com/quarto-ext/shinylive) extension,
@@ -18,7 +18,7 @@ supporting both R and Python Shiny applications.
 
 ## About Shinylive
 
-[Shinylive](https://shiny.posit.co/py/docs/shinylive.html) converts
+[Shinylive](https://shiny.posit.co/py/get-started/shinylive.html) converts
 existing Shiny applications to run entirely in the web browser using
 [WebAssembly](https://webassembly.org/) versions of R
 ([webR](https://docs.r-wasm.org/webr/latest/)) and Python
@@ -90,45 +90,57 @@ Shinylive components. For instance, if we take the main Shinylive
 extension website, we get:
 
 ``` r
-peeky::peek_shinylive_app("https://quarto-ext.github.io/shinylive/")
+# Choose where the files are written (here, a temporary directory)
+out_dir <- file.path(tempdir(), "shinylive-apps")
+peeky::peek_shinylive_app("https://quarto-ext.github.io/shinylive/", output_dir = out_dir)
 #> 
 #> ── Shinylive Applications ──────────────────────────────────────────────────────
 #> 
 #> ── Shiny for Python Applications ──
 #> 
 #> Run in Terminal:
-#> shiny run --reload --launch-browser "/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app/app_1/app.py"
-#> shiny run --reload --launch-browser "/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app/app_2/app.py"
-#> shiny run --reload --launch-browser "/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app/app_3/app.py"
-#> shiny run --reload --launch-browser "/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app/app_4/app.py"
+#> shiny run --reload --launch-browser "/tmp/RtmpXXXXXX/shinylive-apps/app_1/app.py"
+#> shiny run --reload --launch-browser "/tmp/RtmpXXXXXX/shinylive-apps/app_2/app.py"
+#> shiny run --reload --launch-browser "/tmp/RtmpXXXXXX/shinylive-apps/app_3/app.py"
+#> shiny run --reload --launch-browser "/tmp/RtmpXXXXXX/shinylive-apps/app_4/app.py"
 ```
 
 This would be equivalent to if we ran the following:
 
 ``` r
-peeky::peek_quarto_shinylive_app("https://quarto-ext.github.io/shinylive/")
+peeky::peek_quarto_shinylive_app(
+  "https://quarto-ext.github.io/shinylive/",
+  output_path = out_dir
+)
 ```
 
-By default, the extracted files will be placed in the current working
-directory under the `converted_shiny_apps` directory. Each application
-will be placed in a subdirectory named `app_1`, `app_2`, etc. If we want
-to specify a different output directory, we can do so by providing the
-`output_path` argument. We can also specify the output format as
-`quarto` to extract the files into a single Quarto document.
+The output location is a required argument, so the package never writes to
+your working directory unless you ask it to: a relative path such as
+`"my-apps"` is created under the current working directory, while an absolute
+path is used as-is. Each application is placed in a subdirectory named
+`app_1`, `app_2`, etc. We can also set the output format to `quarto` to
+extract the files into a single Quarto document.
 
 ``` r
-# Extract the Shinylive application into a different directory
-peeky::peek_quarto_shinylive_app("https://quarto-ext.github.io/shinylive/", output_format = "quarto")
+# Extract the applications into a single Quarto document
+peeky::peek_quarto_shinylive_app(
+  "https://quarto-ext.github.io/shinylive/",
+  output_format = "quarto",
+  output_path = file.path(tempdir(), "shinylive-apps.qmd")
+)
 #> 
 #> ── Quarto Document with Shinylive Applications ─────────────────────────────────
 #> 
 #> ── Setup and Preview Steps ──
 #> 
-#> Step 1: Install the Shinylive extension:
+#> Step 1: Change to the document directory:
+#> cd "/tmp/RtmpXXXXXX"
+#> 
+#> Step 2: Install the Shinylive extension:
 #> quarto add quarto-ext/shinylive
 #> 
-#> Step 2: Preview the document:
-#> quarto preview "converted_shiny_apps.qmd"
+#> Step 3: Preview the document:
+#> quarto preview "shinylive-apps.qmd"
 #> 
 #> ── Contents ──
 #> 
@@ -144,12 +156,15 @@ app](https://github.com/coatless-tutorials/convert-shiny-app-r-shinylive)
 on GitHub, we get:
 
 ``` r
-peeky::peek_standalone_shinylive_app("https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/")
+peeky::peek_standalone_shinylive_app(
+  "https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/",
+  output_dir = file.path(tempdir(), "standalone-app")
+)
 #> 
 #> ── Standalone Shinylive Application ────────────────────────────────────────────
 #> Type: R Shiny
 #> Run in R:
-#> shiny::runApp("/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app")
+#> shiny::runApp("/tmp/RtmpXXXXXX/standalone-app")
 #> 
 #> ── Contents ──
 #> 
@@ -160,7 +175,7 @@ peeky::peek_standalone_shinylive_app("https://tutorials.thecoatlessprofessor.com
 #> 
 #> Total files: 2
 #> 
-#> Location: '/Users/ronin/Documents/GitHub/r-pkg/peeky/converted_shiny_app'
+#> Location: '/tmp/RtmpXXXXXX/standalone-app'
 ```
 
 ## License

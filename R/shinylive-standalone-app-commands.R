@@ -25,6 +25,15 @@ create_standalone_shinylive_app <- function(app_data, output_dir, url) {
 #' @param ... Additional arguments passed to print
 #'
 #' @export
+#' @return
+#' Invisibly returns the original object of class \code{standalone_shinylive_app}.
+#' Primarily called for its side effect of displaying formatted information about:
+#' \itemize{
+#'   \item Application type (R/Python)
+#'   \item Command to run the application
+#'   \item List of extracted files by type
+#'   \item File locations
+#' }
 print.standalone_shinylive_app <- function(x, ...) {
 
 

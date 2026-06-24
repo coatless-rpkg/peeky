@@ -56,30 +56,6 @@
 #' - [find_shinylive_app_json()] which uses this validation
 #'
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' # Valid structure
-#' valid_data <- list(
-#'   list(
-#'     name = "app.R",
-#'     content = "library(shiny)\n...",
-#'     type = "text"
-#'   ),
-#'   list(
-#'     name = "data.csv",
-#'     content = "x,y\n1,2",
-#'     type = "text"
-#'   )
-#' )
-#' validate_app_json(valid_data)  # Returns TRUE
-#'
-#' # Invalid structures that will error:
-#' validate_app_json(list())  # Empty list
-#' validate_app_json(list(
-#'   list(name = "app.R")  # Missing required fields
-#' ))
-#' }
 validate_app_json <- function(json_data) {
     if (!is.list(json_data)) {
         cli::cli_abort(c(
@@ -131,5 +107,24 @@ validate_app_json <- function(json_data) {
 padding_width <- function(n) {
     if (n <= 0) return(1)
     floor(log10(n)) + 1
+}
+
+#' Resolve an output path against the working directory
+#'
+#' Absolute (\dQuote{global}) paths are returned unchanged; relative paths are
+#' resolved against the current working directory so that callers always work
+#' with a fully qualified location and never silently write somewhere
+#' unexpected.
+#'
+#' @param path Character string. A user-supplied output path.
+#'
+#' @return Character string giving an absolute path.
+#'
+#' @noRd
+resolve_output_path <- function(path) {
+    if (!fs::is_absolute_path(path)) {
+        path <- fs::path(getwd(), path)
+    }
+    path
 }
 

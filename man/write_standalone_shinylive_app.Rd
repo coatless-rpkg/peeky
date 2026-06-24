@@ -4,11 +4,7 @@
 \alias{write_standalone_shinylive_app}
 \title{Write Standalone Shinylive Application Files from JSON Data}
 \usage{
-write_standalone_shinylive_app(
-  json_data,
-  source_url,
-  output_dir = "converted_shiny_app"
-)
+write_standalone_shinylive_app(json_data, source_url, output_dir)
 }
 \arguments{
 \item{json_data}{List. Parsed JSON data from a Shinylive \code{app.json} file.
@@ -24,8 +20,9 @@ was downloaded. Used for reference and provenance tracking in the returned
 object.}
 
 \item{output_dir}{Character string. Directory where application files should
-be extracted. Defaults to \code{"converted_shiny_app"}. Will be created if it
-doesn't exist. Existing files in this directory may be overwritten.}
+be extracted. A relative path is created under the current working
+directory; an absolute path is used as-is. Will be created if it doesn't
+exist. Existing files in this directory may be overwritten.}
 }
 \value{
 An object of class \code{"standalone_shinylive_app"} containing:
@@ -72,9 +69,6 @@ Expected JSON data structure:
 }
 
 \examples{
-\dontshow{
-.old_wd <- setwd(tempdir()) # examplesTempdir 
-}
 # Example JSON data structure
 json_data <- list(
   list(
@@ -92,11 +86,8 @@ json_data <- list(
 app <- write_standalone_shinylive_app(
   json_data,
   "https://example.com/app.json",
-  "my_app"
+  file.path(tempdir(), "my_app")
 )
-\dontshow{
-setwd(.old_wd) # examplesTempdir 
-}
 }
 \seealso{
 \itemize{

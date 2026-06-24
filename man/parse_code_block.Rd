@@ -50,32 +50,6 @@ automatically placed in:
 }
 }
 
-\examples{
-\dontrun{
-# Single-file R application
-code <- '
-#| viewerHeight: 500
-library(shiny)
-ui <- fluidPage()
-server <- function(input, output) {}
-shinyApp(ui, server)
-'
-result1 <- parse_code_block(code, "r")
-
-# Multi-file Python application
-code <- '
-#| fullWidth: true
-## file: app.py
-from shiny import App, ui
-app = App(app_ui)
-## file: requirements.txt
-## type: text
-shiny>=0.5.0
-'
-result2 <- parse_code_block(code, "python")
-}
-
-}
 \seealso{
 \itemize{
 \item \code{\link[=parse_yaml_options]{parse_yaml_options()}} for YAML-style option parsing

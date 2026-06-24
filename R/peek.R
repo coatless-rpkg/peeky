@@ -10,7 +10,8 @@
 #'   - A directory containing `app.json`
 #'   - A Quarto document with embedded Shinylive applications
 #' @param output_dir Character string. Directory where the application files should
-#'   be extracted. Defaults to `"converted_shiny_app"`. Will be created if it doesn't exist.
+#'   be extracted. A relative path is created under the current working directory;
+#'   an absolute path is used as-is. The directory will be created if it doesn't exist.
 #'
 #' @return
 #' An object containing the extracted application information:
@@ -60,20 +61,19 @@
 #'
 #' @export
 #' @examplesIf interactive()
-#' # Download a standalone Shinylive application
+#' # Write the extracted files to the session's temporary directory
 #' url <- "https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/"
-#'
-#' app <- peek_shinylive_app(url)
-#'
-#' # Extract to a specific directory
-#' app <- peek_shinylive_app(
-#'   url,
-#'   output_dir = "my_extracted_app"
-#' )
+#' app <- peek_shinylive_app(url, output_dir = file.path(tempdir(), "my_extracted_app"))
 #'
 #' # Download from a Quarto document
-#' apps <- peek_shinylive_app("https://quarto-ext.github.io/shinylive/")
-peek_shinylive_app <- function(url, output_dir = "converted_shiny_app") {
+#' apps <- peek_shinylive_app(
+#'   "https://quarto-ext.github.io/shinylive/",
+#'   output_dir = file.path(tempdir(), "my_extracted_apps")
+#' )
+peek_shinylive_app <- function(url, output_dir) {
+    # Resolve relative paths against the working directory
+    output_dir <- resolve_output_path(output_dir)
+
     # Download content
     resp <- httr::GET(url)
     if (httr::http_error(resp)) {
@@ -131,10 +131,11 @@ peek_shinylive_app <- function(url, output_dir = "converted_shiny_app") {
 #'   - `"app-dir"`: Creates separate directories for each application
 #'   - `"quarto"`: Combines all applications into a single Quarto document
 #'
-#' @param output_path Character string or NULL. Where to write the extracted
-#'   applications. If NULL, uses default paths:
-#'   - For "app-dir": "./converted_shiny_apps/"
-#'   - For "quarto": "./converted_shiny_apps.qmd"
+#' @param output_path Character string. Where to write the extracted
+#'   applications. A relative path is resolved against the current working
+#'   directory; an absolute path is used as-is.
+#'   - For `"app-dir"`: a directory that will hold the extracted applications
+#'   - For `"quarto"`: the path of the `.qmd` file to create
 #'
 #' @return
 #' An object of class `"shinylive_commands"` that provides:
@@ -175,35 +176,30 @@ peek_shinylive_app <- function(url, output_dir = "converted_shiny_app") {
 #'
 #' @export
 #' @examplesIf interactive()
-#' # Extract as separate applications
+#' # Extract as separate application directories under a temporary directory
 #' result <- peek_quarto_shinylive_app(
 #'   "https://quarto-ext.github.io/shinylive",
-#'   output_format = "app-dir"
+#'   output_format = "app-dir",
+#'   output_path = file.path(tempdir(), "quarto_apps")
 #' )
 #'
 #' # Combine into a new Quarto document
 #' result <- peek_quarto_shinylive_app(
 #'   "https://quarto-ext.github.io/shinylive",
 #'   output_format = "quarto",
-#'   output_path = "my_apps.qmd"
+#'   output_path = file.path(tempdir(), "my_apps.qmd")
 #' )
 #'
 #' # Print will show instructions for running the apps
 #' print(result)
 peek_quarto_shinylive_app <- function(url,
                                       output_format = c("app-dir", "quarto"),
-                                      output_path = NULL) {
+                                      output_path) {
     # Validate output format
     output_format <- match.arg(output_format)
 
-    # Set default output path if not provided
-    if (is.null(output_path)) {
-        output_path <- if (output_format == "app-dir") {
-            "converted_shiny_apps"
-        } else {
-            "converted_shiny_apps.qmd"
-        }
-    }
+    # Resolve relative paths against the working directory
+    output_path <- resolve_output_path(output_path)
 
     # Download and parse HTML
     resp <- httr::GET(url)
@@ -254,9 +250,9 @@ peek_quarto_shinylive_app <- function(url,
 #'   The function will automatically append `"app.json"` to directory URLs.
 #'
 #' @param output_dir Character string. Directory where the application files
-#'   should be extracted. Defaults to `"converted_shiny_app"`. Will be created
-#'   if it doesn't exist. If the directory already exists, files may be
-#'   overwritten.
+#'   should be extracted. A relative path is created under the current working
+#'   directory; an absolute path is used as-is. Will be created if it doesn't
+#'   exist. If the directory already exists, files may be overwritten.
 #'
 #' @return
 #' An object of class `"standalone_shinylive_app"` containing:
@@ -296,21 +292,24 @@ peek_quarto_shinylive_app <- function(url,
 #'
 #' @export
 #' @examplesIf interactive()
-#'
-#' # Download from a direct app.json URL
+#' # Download from a direct app.json URL into a temporary directory
 #' app <- peek_standalone_shinylive_app(
-#'   "https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/app.json"
+#'   "https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/app.json",
+#'   output_dir = file.path(tempdir(), "standalone_app")
 #' )
 #'
 #' # Download from a directory URL (app.json will be appended)
 #' app <- peek_standalone_shinylive_app(
 #'   "https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/",
-#'   output_dir = "my_local_app"
+#'   output_dir = file.path(tempdir(), "my_local_app")
 #' )
 #'
 #' # Print shows how to run the application
 #' print(app)
-peek_standalone_shinylive_app <- function(url, output_dir = "converted_shiny_app") {
+peek_standalone_shinylive_app <- function(url, output_dir) {
+
+    # Resolve relative paths against the working directory
+    output_dir <- resolve_output_path(output_dir)
 
     # Find and validate URL for app.json
     # we append app.json to the URL as one of the possible paths

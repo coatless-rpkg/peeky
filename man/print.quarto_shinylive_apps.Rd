@@ -11,6 +11,16 @@
 
 \item{...}{Additional arguments passed to print}
 }
+\value{
+Invisibly returns the original object of class \code{quarto_shinylive_apps}.
+Primarily called for its side effect of displaying formatted information about:
+\itemize{
+\item Application types (R/Python)
+\item Commands to run each application
+\item File contents and organization
+\item Output locations
+}
+}
 \description{
 Print method for \code{quarto_shinylive_apps} objects
 }

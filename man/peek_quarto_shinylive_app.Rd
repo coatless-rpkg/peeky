@@ -7,7 +7,7 @@
 peek_quarto_shinylive_app(
   url,
   output_format = c("app-dir", "quarto"),
-  output_path = NULL
+  output_path
 )
 }
 \arguments{
@@ -22,11 +22,12 @@ extracted. Must be one of:
 \item \code{"quarto"}: Combines all applications into a single Quarto document
 }}
 
-\item{output_path}{Character string or NULL. Where to write the extracted
-applications. If NULL, uses default paths:
+\item{output_path}{Character string. Where to write the extracted
+applications. A relative path is resolved against the current working
+directory; an absolute path is used as-is.
 \itemize{
-\item For "app-dir": "./converted_shiny_apps/"
-\item For "quarto": "./converted_shiny_apps.qmd"
+\item For \code{"app-dir"}: a directory that will hold the extracted applications
+\item For \code{"quarto"}: the path of the \code{.qmd} file to create
 }}
 }
 \value{
@@ -77,18 +78,19 @@ The function will error with informative messages if:
 }
 
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-# Extract as separate applications
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
+# Extract as separate application directories under a temporary directory
 result <- peek_quarto_shinylive_app(
   "https://quarto-ext.github.io/shinylive",
-  output_format = "app-dir"
+  output_format = "app-dir",
+  output_path = file.path(tempdir(), "quarto_apps")
 )
 
 # Combine into a new Quarto document
 result <- peek_quarto_shinylive_app(
   "https://quarto-ext.github.io/shinylive",
   output_format = "quarto",
-  output_path = "my_apps.qmd"
+  output_path = file.path(tempdir(), "my_apps.qmd")
 )
 
 # Print will show instructions for running the apps

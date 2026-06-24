@@ -27,20 +27,6 @@
 #'    - Returns immediately if valid app.json is found
 #'
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' # Direct app.json URL
-#' result <- find_shinylive_app_json("https://example.com/app.json")
-#'
-#' # Directory containing app.json
-#' result <- find_shinylive_app_json("https://example.com/myapp/")
-#'
-#' # Check if valid
-#' if (result$valid) {
-#'   cat("Found app.json at:", result$url)
-#' }
-#' }
 find_shinylive_app_json <- function(base_url) {
     # List of possible paths to try
     possible_paths <- c(
@@ -106,21 +92,6 @@ find_shinylive_app_json <- function(base_url) {
 #' options (prefixed with `'#|'`) and file markers (prefixed with `'## file:'`).
 #'
 #' @seealso parse_code_block
-#'
-#' @examples
-#' \dontrun{
-#' html_content <- '
-#' <pre class="shinylive-r" data-engine="r">
-#' #| viewerHeight: 500
-#' ## file: app.R
-#' library(shiny)
-#' ui <- fluidPage()
-#' server <- function(input, output) {}
-#' shinyApp(ui, server)
-#' </pre>
-#' '
-#' apps <- find_shinylive_code(html_content)
-#' }
 #'
 #' @keywords internal
 find_shinylive_code <- function(html) {

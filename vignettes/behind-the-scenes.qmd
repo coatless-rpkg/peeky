@@ -320,7 +320,7 @@ peeky::peek_standalone_shinylive_app(
 # For Quarto-embedded applications
 peeky::peek_quarto_shinylive_app(
   url = "https://coatless-quarto.github.io/r-shinylive-demo/",
-  output_dir = "extracted_quarto",
+  output_path = "extracted_quarto",
   output_format = "app-dir"  # or "quarto"
 )
 ```
@@ -354,7 +354,8 @@ When working with Quarto documents containing multiple Shinylive applications,
 # Extract as separate application directories
 peeky::peek_quarto_shinylive_app(
   url = "https://quarto-ext.github.io/shinylive",
-  output_format = "app-dir"
+  output_format = "app-dir",
+  output_path = "extracted_quarto"
 )
 # Results in:
 # extracted_quarto/
@@ -366,7 +367,8 @@ peeky::peek_quarto_shinylive_app(
 # Reconstruct as a new Quarto document
 peeky::peek_quarto_shinylive_app(
   url = "https://quarto-ext.github.io/shinylive",
-  output_format = "quarto"
+  output_format = "quarto",
+  output_path = "extracted_quarto.qmd"
 )
 # Results in a single .qmd file containing all applications
 ```
@@ -485,7 +487,7 @@ Thanks to the Shinylive, [webR](https://docs.r-wasm.org/webr/latest/) and [Pyodi
 5. [Shiny Standalone webR Demo][protoslr]
 
 [quarto]: https://quarto.org
-[slexplain]: https://shiny.posit.co/py/docs/shinylive.html
+[slexplain]: https://shiny.posit.co/py/get-started/shinylive.html
 [qsl]: https://github.com/quarto-ext/shinylive
 [webr]: https://docs.r-wasm.org/webr/latest/
 [webrpkg]: https://repo.r-wasm.org/

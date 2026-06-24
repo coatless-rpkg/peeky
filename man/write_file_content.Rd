@@ -46,23 +46,17 @@ Parent directories in the file path are automatically created if they don't
 exist using \code{fs::dir_create()} with \code{recurse = TRUE}.
 }
 \examples{
-\dontshow{
-.old_wd <- setwd(tempdir()) # examplesTempdir 
-}
-# Writing a text file
+# Write a text file into a temporary directory
 write_file_content(
   content = "library(shiny)\n\nui <- fluidPage()",
-  file_path = "app/app.R",
+  file_path = file.path(tempdir(), "app", "app.R"),
   type = "text"
 )
 
-# Write base64 encoded image
+# Write a base64-encoded image
 b64img <- paste0(
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAA",
   "DUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
 )
-write_file_content(b64img, "test.png", type = "binary")
-\dontshow{
-setwd(.old_wd) # examplesTempdir 
-}
+write_file_content(b64img, file.path(tempdir(), "test.png"), type = "binary")
 }

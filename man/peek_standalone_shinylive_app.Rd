@@ -4,7 +4,7 @@
 \alias{peek_standalone_shinylive_app}
 \title{Download and Extract a Standalone Shinylive Application}
 \usage{
-peek_standalone_shinylive_app(url, output_dir = "converted_shiny_app")
+peek_standalone_shinylive_app(url, output_dir)
 }
 \arguments{
 \item{url}{Character string. URL pointing to either:
@@ -16,9 +16,9 @@ peek_standalone_shinylive_app(url, output_dir = "converted_shiny_app")
 The function will automatically append \code{"app.json"} to directory URLs.}
 
 \item{output_dir}{Character string. Directory where the application files
-should be extracted. Defaults to \code{"converted_shiny_app"}. Will be created
-if it doesn't exist. If the directory already exists, files may be
-overwritten.}
+should be extracted. A relative path is created under the current working
+directory; an absolute path is used as-is. Will be created if it doesn't
+exist. If the directory already exists, files may be overwritten.}
 }
 \value{
 An object of class \code{"standalone_shinylive_app"} containing:
@@ -66,17 +66,17 @@ The function will error with informative messages if:
 }
 
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-
-# Download from a direct app.json URL
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
+# Download from a direct app.json URL into a temporary directory
 app <- peek_standalone_shinylive_app(
-  "https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/app.json"
+  "https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/app.json",
+  output_dir = file.path(tempdir(), "standalone_app")
 )
 
 # Download from a directory URL (app.json will be appended)
 app <- peek_standalone_shinylive_app(
   "https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/",
-  output_dir = "my_local_app"
+  output_dir = file.path(tempdir(), "my_local_app")
 )
 
 # Print shows how to run the application

@@ -4,7 +4,7 @@
 \alias{peek_shinylive_app}
 \title{Download and Extract Shinylive Applications from URLs}
 \usage{
-peek_shinylive_app(url, output_dir = "converted_shiny_app")
+peek_shinylive_app(url, output_dir)
 }
 \arguments{
 \item{url}{Character string. URL pointing to one of:
@@ -15,7 +15,8 @@ peek_shinylive_app(url, output_dir = "converted_shiny_app")
 }}
 
 \item{output_dir}{Character string. Directory where the application files should
-be extracted. Defaults to \code{"converted_shiny_app"}. Will be created if it doesn't exist.}
+be extracted. A relative path is created under the current working directory;
+an absolute path is used as-is. The directory will be created if it doesn't exist.}
 }
 \value{
 An object containing the extracted application information:
@@ -78,20 +79,16 @@ The function will error with informative messages if:
 }
 
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-# Download a standalone Shinylive application
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
+# Write the extracted files to the session's temporary directory
 url <- "https://tutorials.thecoatlessprofessor.com/convert-shiny-app-r-shinylive/"
-
-app <- peek_shinylive_app(url)
-
-# Extract to a specific directory
-app <- peek_shinylive_app(
-  url,
-  output_dir = "my_extracted_app"
-)
+app <- peek_shinylive_app(url, output_dir = file.path(tempdir(), "my_extracted_app"))
 
 # Download from a Quarto document
-apps <- peek_shinylive_app("https://quarto-ext.github.io/shinylive/")
+apps <- peek_shinylive_app(
+  "https://quarto-ext.github.io/shinylive/",
+  output_dir = file.path(tempdir(), "my_extracted_apps")
+)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

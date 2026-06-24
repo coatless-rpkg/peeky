@@ -44,22 +44,6 @@ The function performs the following steps:
 Code blocks should follow the Shinylive format with optional YAML-style
 options (prefixed with \code{'#|'}) and file markers (prefixed with \code{'## file:'}).
 }
-\examples{
-\dontrun{
-html_content <- '
-<pre class="shinylive-r" data-engine="r">
-#| viewerHeight: 500
-## file: app.R
-library(shiny)
-ui <- fluidPage()
-server <- function(input, output) {}
-shinyApp(ui, server)
-</pre>
-'
-apps <- find_shinylive_code(html_content)
-}
-
-}
 \seealso{
 parse_code_block
 }

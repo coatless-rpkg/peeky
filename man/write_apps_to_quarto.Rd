@@ -24,6 +24,10 @@ contain:
 written. Should end with \code{.qmd} extension. Parent directory will be created
 if it doesn't exist.}
 }
+\value{
+No return value, called for its side effect of writing a Quarto document
+to \code{qmd_path}.
+}
 \description{
 Converts a list of parsed Shinylive applications into a single Quarto document.
 Creates a properly formatted .qmd file with YAML frontmatter, organized sections
@@ -88,9 +92,6 @@ Options are converted to YAML format based on their type:
 }
 
 \examples{
-\dontshow{
-.old_wd <- setwd(tempdir()) # examplesTempdir
-}
 # Example apps list structure
 apps <- list(
   list(
@@ -109,10 +110,7 @@ apps <- list(
   )
 )
 
-write_apps_to_quarto(apps, "applications.qmd")
-\dontshow{
-setwd(.old_wd) # examplesTempdir
-}
+write_apps_to_quarto(apps, file.path(tempdir(), "applications.qmd"))
 }
 \seealso{
 \itemize{

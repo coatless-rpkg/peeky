@@ -31,20 +31,20 @@
 #' exist using `fs::dir_create()` with `recurse = TRUE`.
 #'
 #' @export
-#' @examplesTempdir
-#' # Writing a text file
+#' @examples
+#' # Write a text file into a temporary directory
 #' write_file_content(
 #'   content = "library(shiny)\n\nui <- fluidPage()",
-#'   file_path = "app/app.R",
+#'   file_path = file.path(tempdir(), "app", "app.R"),
 #'   type = "text"
 #' )
 #'
-#' # Write base64 encoded image
+#' # Write a base64-encoded image
 #' b64img <- paste0(
 #'   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAA",
 #'   "DUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
 #' )
-#' write_file_content(b64img, "test.png", type = "binary")
+#' write_file_content(b64img, file.path(tempdir(), "test.png"), type = "binary")
 write_file_content <- function(content, file_path, type = "text") {
     # Ensure parent directory exists
     parent_dir <- dirname(file_path)
@@ -133,8 +133,12 @@ write_file_content <- function(content, file_path, type = "text") {
 #'    - Properly closes the code block
 #' 3. Writes the complete document to the specified path
 #'
+#' @return
+#' No return value, called for its side effect of writing a Quarto document
+#' to `qmd_path`.
+#'
 #' @export
-#' @examplesTempdir
+#' @examples
 #' # Example apps list structure
 #' apps <- list(
 #'   list(
@@ -153,7 +157,7 @@ write_file_content <- function(content, file_path, type = "text") {
 #'   )
 #' )
 #'
-#' write_apps_to_quarto(apps, "applications.qmd")
+#' write_apps_to_quarto(apps, file.path(tempdir(), "applications.qmd"))
 #' @seealso
 #' * [write_apps_to_dirs()] for alternative directory output format
 write_apps_to_quarto <- function(apps, qmd_path) {
@@ -283,12 +287,16 @@ write_apps_to_quarto <- function(apps, qmd_path) {
 #' }
 #' ```
 #'
+#' @return
+#' No return value, called for its side effect of writing one application
+#' subdirectory per app (plus a metadata file) under `base_dir`.
+#'
 #' @seealso
 #' - [padding_width()] for directory number padding calculation
 #' - [write_apps_to_quarto()] for alternative Quarto output format
 #'
 #' @export
-#' @examplesTempdir
+#' @examples
 #' # Example apps list structure
 #' apps <- list(
 #'   list(
@@ -315,7 +323,7 @@ write_apps_to_quarto <- function(apps, qmd_path) {
 #'   )
 #' )
 #'
-#' write_apps_to_dirs(apps, "extracted_apps")
+#' write_apps_to_dirs(apps, file.path(tempdir(), "extracted_apps"))
 write_apps_to_dirs <- function(apps, base_dir) {
     fs::dir_create(base_dir, recurse = TRUE)
 
@@ -375,8 +383,9 @@ write_apps_to_dirs <- function(apps, base_dir) {
 #'   object.
 #'
 #' @param output_dir Character string. Directory where application files should
-#'   be extracted. Defaults to `"converted_shiny_app"`. Will be created if it
-#'   doesn't exist. Existing files in this directory may be overwritten.
+#'   be extracted. A relative path is created under the current working
+#'   directory; an absolute path is used as-is. Will be created if it doesn't
+#'   exist. Existing files in this directory may be overwritten.
 #'
 #' @return
 #'  An object of class `"standalone_shinylive_app"` containing:
@@ -419,7 +428,7 @@ write_apps_to_dirs <- function(apps, base_dir) {
 #' - [validate_app_json()] for JSON data validation
 #'
 #' @export
-#' @examplesTempdir
+#' @examples
 #' # Example JSON data structure
 #' json_data <- list(
 #'   list(
@@ -437,9 +446,12 @@ write_apps_to_dirs <- function(apps, base_dir) {
 #' app <- write_standalone_shinylive_app(
 #'   json_data,
 #'   "https://example.com/app.json",
-#'   "my_app"
+#'   file.path(tempdir(), "my_app")
 #' )
-write_standalone_shinylive_app <- function(json_data, source_url, output_dir = "converted_shiny_app") {
+write_standalone_shinylive_app <- function(json_data, source_url, output_dir) {
+    # Resolve relative paths against the working directory
+    output_dir <- resolve_output_path(output_dir)
+
     # Create output directory
     fs::dir_create(output_dir, recurse = TRUE)
 

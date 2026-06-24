@@ -36,26 +36,6 @@ The function handles several value types:
 
 Lines that don't contain a colon (\code{':'}) are ignored.
 }
-\examples{
-\dontrun{
-# Parse various types of options
-yaml_lines <- c(
-  "#| viewerHeight: 500",
-  "#| components: [slider,button]",
-  "#| fullWidth: true",
-  "#| title: My App"
-)
-options <- parse_yaml_options(yaml_lines)
-# Results in:
-# list(
-#   viewerHeight = 500,
-#   components = c("slider", "button"),
-#   fullWidth = TRUE,
-#   title = "My App"
-# )
-}
-
-}
 \seealso{
 parse_code_block
 }

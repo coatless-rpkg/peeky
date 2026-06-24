@@ -20,5 +20,10 @@ Useful links:
 \author{
 \strong{Maintainer}: James Joseph Balamuta \email{james.balamuta@gmail.com}
 
+Authors:
+\itemize{
+  \item James Joseph Balamuta \email{james.balamuta@gmail.com}
+}
+
 }
 \keyword{internal}

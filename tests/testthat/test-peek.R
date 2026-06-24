@@ -31,8 +31,12 @@ test_that("peek_shinylive_app(): handles HTML content correctly", {
         .package = "httr"
     )
 
+    # Create a temporary directory for output
+    temp_dir <- base::tempfile()
+    base::on.exit(base::unlink(temp_dir, recursive = TRUE))
+
     # Test the function with a sample URL
-    result <- peek_shinylive_app("http://example.com")
+    result <- peek_shinylive_app("http://example.com", output_dir = temp_dir)
 
     # Verify the result is a quarto_shinylive_apps object
     testthat::expect_s3_class(result, "quarto_shinylive_apps")
@@ -63,8 +67,12 @@ test_that("peek_shinylive_app(): handles app.json content correctly", {
         .package = "httr"
     )
 
+    # Create a temporary directory for output
+    temp_dir <- base::tempfile()
+    base::on.exit(base::unlink(temp_dir, recursive = TRUE))
+
     # Test the function with a URL pointing to app.json
-    result <- peek_shinylive_app("http://example.com/app.json")
+    result <- peek_shinylive_app("http://example.com/app.json", output_dir = temp_dir)
 
     # Verify the result is a standalone_shinylive_app object
     testthat::expect_s3_class(result, "standalone_shinylive_app")

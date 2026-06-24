@@ -23,6 +23,10 @@ contain:
 \item{base_dir}{Character string. Base directory where application
 subdirectories should be created. Will be created if it doesn't exist.}
 }
+\value{
+No return value, called for its side effect of writing one application
+subdirectory per app (plus a metadata file) under \code{base_dir}.
+}
 \description{
 Takes a list of parsed Shinylive applications and writes each to its own
 numbered subdirectory. Creates consistently numbered directories with proper
@@ -75,9 +79,6 @@ Each directory includes a \code{shinylive_metadata.json} file containing:
 }
 
 \examples{
-\dontshow{
-.old_wd <- setwd(tempdir()) # examplesTempdir
-}
 # Example apps list structure
 apps <- list(
   list(
@@ -104,10 +105,7 @@ apps <- list(
   )
 )
 
-write_apps_to_dirs(apps, "extracted_apps")
-\dontshow{
-setwd(.old_wd) # examplesTempdir
-}
+write_apps_to_dirs(apps, file.path(tempdir(), "extracted_apps"))
 }
 \seealso{
 \itemize{

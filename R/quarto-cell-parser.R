@@ -35,31 +35,6 @@
 #' - `"app.R"` for R applications
 #' - `"app.py"` for Python applications
 #'
-#' @examples
-#' \dontrun{
-#' # Single-file R application
-#' code <- '
-#' #| viewerHeight: 500
-#' library(shiny)
-#' ui <- fluidPage()
-#' server <- function(input, output) {}
-#' shinyApp(ui, server)
-#' '
-#' result1 <- parse_code_block(code, "r")
-#'
-#' # Multi-file Python application
-#' code <- '
-#' #| fullWidth: true
-#' ## file: app.py
-#' from shiny import App, ui
-#' app = App(app_ui)
-#' ## file: requirements.txt
-#' ## type: text
-#' shiny>=0.5.0
-#' '
-#' result2 <- parse_code_block(code, "python")
-#' }
-#'
 #' @seealso
 #'
 #' - [parse_yaml_options()] for YAML-style option parsing
@@ -167,25 +142,6 @@ parse_code_block <- function(code_text, engine) {
 #'   - **Strings:** All other values
 #'
 #' Lines that don't contain a colon (`':'`) are ignored.
-#'
-#' @examples
-#' \dontrun{
-#' # Parse various types of options
-#' yaml_lines <- c(
-#'   "#| viewerHeight: 500",
-#'   "#| components: [slider,button]",
-#'   "#| fullWidth: true",
-#'   "#| title: My App"
-#' )
-#' options <- parse_yaml_options(yaml_lines)
-#' # Results in:
-#' # list(
-#' #   viewerHeight = 500,
-#' #   components = c("slider", "button"),
-#' #   fullWidth = TRUE,
-#' #   title = "My App"
-#' # )
-#' }
 #'
 #' @seealso parse_code_block
 #'

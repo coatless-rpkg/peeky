@@ -40,18 +40,4 @@ The function performs the following steps:
 }
 }
 }
-\examples{
-\dontrun{
-# Direct app.json URL
-result <- find_shinylive_app_json("https://example.com/app.json")
-
-# Directory containing app.json
-result <- find_shinylive_app_json("https://example.com/myapp/")
-
-# Check if valid
-if (result$valid) {
-  cat("Found app.json at:", result$url)
-}
-}
-}
 \keyword{internal}

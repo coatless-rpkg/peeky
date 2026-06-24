@@ -72,30 +72,6 @@ a file in the application.
 }\if{html}{\out{</div>}}
 }
 
-\examples{
-\dontrun{
-# Valid structure
-valid_data <- list(
-  list(
-    name = "app.R",
-    content = "library(shiny)\n...",
-    type = "text"
-  ),
-  list(
-    name = "data.csv",
-    content = "x,y\n1,2",
-    type = "text"
-  )
-)
-validate_app_json(valid_data)  # Returns TRUE
-
-# Invalid structures that will error:
-validate_app_json(list())  # Empty list
-validate_app_json(list(
-  list(name = "app.R")  # Missing required fields
-))
-}
-}
 \seealso{
 \itemize{
 \item \code{\link[=find_shinylive_app_json]{find_shinylive_app_json()}} which uses this validation

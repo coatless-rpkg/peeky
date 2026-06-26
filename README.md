@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# peeky <img src="man/figures/logo-animated.svg" align="right" alt="Logo: cartoon eyes peeking over an app card whose corner peels back to reveal source code." width="150"/>
+# peeky <picture><source media="(prefers-color-scheme: dark)" srcset="man/figures/logo-peeky-dark-animated.svg"><img src="man/figures/logo-peeky-light-animated.svg" align="right" alt="Logo: cartoon eyes peeking over an app card whose corner peels back to reveal source code." width="150"/></picture>
 
 <!-- badges: start -->
 

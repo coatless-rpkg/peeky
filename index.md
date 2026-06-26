@@ -1,4 +1,4 @@
-# peeky
+# peeky ![Logo: cartoon eyes peeking over an app card whose corner peels back to reveal source code.](reference/figures/logo-peeky-light-animated.svg)
 
 The `peeky` package helps you extract, examine, and run the source code
 from Shiny applications that have been converted to run in the browser

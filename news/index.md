@@ -2,6 +2,8 @@
 
 ## peeky 0.1.0
 
+CRAN release: 2026-07-02
+
 - `peeky` is a package that allows users to peek at the source code of a
   Shinylive application.
   - It works with both standalone and embedded Shinylive applications
